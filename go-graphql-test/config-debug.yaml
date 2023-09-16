@@ -1,0 +1,23 @@
+env: 'wenhua123'
+pepper: '111'
+hmackey: 'wenhua123'
+
+mysql:
+  host: '127.0.0.1'
+  port: 3306
+  username: 'root'
+  password: 'Mybabysjk888888.,'
+  database: 'graphql-go'
+  maxidleconnections: 100
+  maxopenconnections: 100
+  maxconnectionlifetime: 100
+  loglevel: 1
+
+mailgun:
+  apikey: 'wenhua123'
+  domain: 'wenhua123'
+
+jwtsecret: 'wenhua123'
+host: '127.0.0.1'
+port: 8808
+fromemail: '12345'

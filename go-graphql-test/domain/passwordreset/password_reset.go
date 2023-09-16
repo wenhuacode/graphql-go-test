@@ -1,10 +1,12 @@
 package passwordreset
 
-import "github.com/jinzhu/gorm"
+import (
+	bgorm "go-graphql-test/pkg/grom"
+)
 
 // PasswordReset domain
 type PasswordReset struct {
-	gorm.Model
+	bgorm.BaseModel
 	UserID uint   `gorm:"not null"`
 	Token  string `gorm:"not null;unique_index"`
 }

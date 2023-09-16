@@ -1,10 +1,10 @@
 package user
 
-import "github.com/jinzhu/gorm"
+import bgorm "go-graphql-test/pkg/grom"
 
 // User domain model
 type User struct {
-	gorm.Model
+	bgorm.BaseModel
 	FirstName string `gorm:"size:255"`
 	LastName  string `gorm:"size:255"`
 	Email     string `gorm:"NOT NULL; UNIQUE_INDEX"`

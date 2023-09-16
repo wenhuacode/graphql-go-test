@@ -1,8 +1,10 @@
 package passwordreset
 
 import (
-	"github.com/jinzhu/gorm"
 	pwd "go-graphql-test/domain/passwordreset"
+	"gorm.io/gorm"
+
+	bgorm "go-graphql-test/pkg/grom"
 )
 
 // Repo interface
@@ -37,7 +39,7 @@ func (repo *pwdRepo) Create(pwr *pwd.PasswordReset) error {
 
 func (repo *pwdRepo) Delete(id uint) error {
 	pwr := pwd.PasswordReset{
-		Model: gorm.Model{ID: id},
+		BaseModel: bgorm.BaseModel{ID: int32(id)},
 	}
 	return repo.db.Delete(&pwr).Error
 }

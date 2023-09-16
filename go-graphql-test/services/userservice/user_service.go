@@ -119,7 +119,7 @@ func (us *userService) InitiateResetPassowrd(email string) (string, error) {
 	hashedToken := us.hmac.Hash(token)
 
 	pwd := pwd.PasswordReset{
-		UserID: user.ID,
+		UserID: uint(user.ID),
 		Token:  hashedToken,
 	}
 
@@ -158,7 +158,7 @@ func (us *userService) CompleteUpdatePassword(token, newPassword string) (*user.
 		return nil, err
 	}
 
-	if err = us.PwdRepo.Delete(pwr.ID); err != nil {
+	if err = us.PwdRepo.Delete(uint(pwr.ID)); err != nil {
 		fmt.Println("Failed to delete passwordreset record", pwr.ID, err.Error())
 	}
 	return user, nil

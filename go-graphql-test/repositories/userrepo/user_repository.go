@@ -3,7 +3,7 @@ package userrepo
 import (
 	"go-graphql-test/domain/user"
 
-	"github.com/jinzhu/gorm"
+	"gorm.io/gorm"
 )
 
 // Repo interface
@@ -32,19 +32,19 @@ func NewUserRepo(db *gorm.DB) Repo {
 }
 
 func (u *userRepo) GetByID(id uint) (*user.User, error) {
-	var user user.User
-	if err := u.db.First(&user, id).Error; err != nil {
+	var usr user.User
+	if err := u.db.First(&usr, id).Error; err != nil {
 		return nil, err
 	}
-	return &user, nil
+	return &usr, nil
 }
 
 func (u *userRepo) GetByEmail(email string) (*user.User, error) {
-	var user user.User
-	if err := u.db.Where("email = ?", email).First(&user).Error; err != nil {
+	var usr user.User
+	if err := u.db.Where("email = ?", email).First(&usr).Error; err != nil {
 		return nil, err
 	}
-	return &user, nil
+	return &usr, nil
 }
 
 func (u *userRepo) Create(user *user.User) error {

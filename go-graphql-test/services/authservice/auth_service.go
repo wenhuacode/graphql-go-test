@@ -1,7 +1,7 @@
 package authservice
 
 import (
-	"github.com/yhagio/go_api_boilerplate/domain/user"
+	"go-graphql-test/domain/user"
 	"time"
 
 	jwt "gopkg.in/dgrijalva/jwt-go.v3"
@@ -38,7 +38,7 @@ func (auth *authService) IssueToken(u user.User) (string, error) {
 
 	claims := Claims{
 		u.Email,
-		u.ID,
+		uint(u.ID),
 		jwt.StandardClaims{
 			ExpiresAt: expireTime.Unix(),
 			Issuer:    "Go API Boilerplate",
