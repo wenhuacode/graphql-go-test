@@ -4,12 +4,11 @@ package ent
 
 import (
 	"context"
-	"ent-orm-test/ent/car"
-	"ent-orm-test/ent/group"
 	"ent-orm-test/ent/predicate"
 	"ent-orm-test/ent/user"
 	"errors"
 	"fmt"
+	"time"
 
 	"entgo.io/ent/dialect/sql"
 	"entgo.io/ent/dialect/sql/sqlgraph"
@@ -26,6 +25,108 @@ type UserUpdate struct {
 // Where appends a list predicates to the UserUpdate builder.
 func (uu *UserUpdate) Where(ps ...predicate.User) *UserUpdate {
 	uu.mutation.Where(ps...)
+	return uu
+}
+
+// SetCreatedAt sets the "created_at" field.
+func (uu *UserUpdate) SetCreatedAt(t time.Time) *UserUpdate {
+	uu.mutation.SetCreatedAt(t)
+	return uu
+}
+
+// SetNillableCreatedAt sets the "created_at" field if the given value is not nil.
+func (uu *UserUpdate) SetNillableCreatedAt(t *time.Time) *UserUpdate {
+	if t != nil {
+		uu.SetCreatedAt(*t)
+	}
+	return uu
+}
+
+// SetCreatedBy sets the "created_by" field.
+func (uu *UserUpdate) SetCreatedBy(s string) *UserUpdate {
+	uu.mutation.SetCreatedBy(s)
+	return uu
+}
+
+// SetNillableCreatedBy sets the "created_by" field if the given value is not nil.
+func (uu *UserUpdate) SetNillableCreatedBy(s *string) *UserUpdate {
+	if s != nil {
+		uu.SetCreatedBy(*s)
+	}
+	return uu
+}
+
+// ClearCreatedBy clears the value of the "created_by" field.
+func (uu *UserUpdate) ClearCreatedBy() *UserUpdate {
+	uu.mutation.ClearCreatedBy()
+	return uu
+}
+
+// SetUpdatedAt sets the "updated_at" field.
+func (uu *UserUpdate) SetUpdatedAt(t time.Time) *UserUpdate {
+	uu.mutation.SetUpdatedAt(t)
+	return uu
+}
+
+// SetNillableUpdatedAt sets the "updated_at" field if the given value is not nil.
+func (uu *UserUpdate) SetNillableUpdatedAt(t *time.Time) *UserUpdate {
+	if t != nil {
+		uu.SetUpdatedAt(*t)
+	}
+	return uu
+}
+
+// SetUpdatedBy sets the "updated_by" field.
+func (uu *UserUpdate) SetUpdatedBy(s string) *UserUpdate {
+	uu.mutation.SetUpdatedBy(s)
+	return uu
+}
+
+// SetNillableUpdatedBy sets the "updated_by" field if the given value is not nil.
+func (uu *UserUpdate) SetNillableUpdatedBy(s *string) *UserUpdate {
+	if s != nil {
+		uu.SetUpdatedBy(*s)
+	}
+	return uu
+}
+
+// ClearUpdatedBy clears the value of the "updated_by" field.
+func (uu *UserUpdate) ClearUpdatedBy() *UserUpdate {
+	uu.mutation.ClearUpdatedBy()
+	return uu
+}
+
+// SetDeletedAt sets the "deleted_at" field.
+func (uu *UserUpdate) SetDeletedAt(t time.Time) *UserUpdate {
+	uu.mutation.SetDeletedAt(t)
+	return uu
+}
+
+// SetNillableDeletedAt sets the "deleted_at" field if the given value is not nil.
+func (uu *UserUpdate) SetNillableDeletedAt(t *time.Time) *UserUpdate {
+	if t != nil {
+		uu.SetDeletedAt(*t)
+	}
+	return uu
+}
+
+// SetDeletedBy sets the "deleted_by" field.
+func (uu *UserUpdate) SetDeletedBy(s string) *UserUpdate {
+	uu.mutation.SetDeletedBy(s)
+	return uu
+}
+
+// SetNillableDeletedBy sets the "deleted_by" field if the given value is not nil.
+func (uu *UserUpdate) SetNillableDeletedBy(s *string) *UserUpdate {
+	if s != nil {
+		uu.SetDeletedBy(*s)
+	}
+	return uu
+}
+
+// ClearDeletedBy clears the value of the "deleted_by" field.
+func (uu *UserUpdate) ClearDeletedBy() *UserUpdate {
+	uu.mutation.ClearDeletedBy()
 	return uu
 }
 
@@ -56,81 +157,9 @@ func (uu *UserUpdate) SetNillableName(s *string) *UserUpdate {
 	return uu
 }
 
-// AddCarIDs adds the "cars" edge to the Car entity by IDs.
-func (uu *UserUpdate) AddCarIDs(ids ...int) *UserUpdate {
-	uu.mutation.AddCarIDs(ids...)
-	return uu
-}
-
-// AddCars adds the "cars" edges to the Car entity.
-func (uu *UserUpdate) AddCars(c ...*Car) *UserUpdate {
-	ids := make([]int, len(c))
-	for i := range c {
-		ids[i] = c[i].ID
-	}
-	return uu.AddCarIDs(ids...)
-}
-
-// AddGroupIDs adds the "groups" edge to the Group entity by IDs.
-func (uu *UserUpdate) AddGroupIDs(ids ...int) *UserUpdate {
-	uu.mutation.AddGroupIDs(ids...)
-	return uu
-}
-
-// AddGroups adds the "groups" edges to the Group entity.
-func (uu *UserUpdate) AddGroups(g ...*Group) *UserUpdate {
-	ids := make([]int, len(g))
-	for i := range g {
-		ids[i] = g[i].ID
-	}
-	return uu.AddGroupIDs(ids...)
-}
-
 // Mutation returns the UserMutation object of the builder.
 func (uu *UserUpdate) Mutation() *UserMutation {
 	return uu.mutation
-}
-
-// ClearCars clears all "cars" edges to the Car entity.
-func (uu *UserUpdate) ClearCars() *UserUpdate {
-	uu.mutation.ClearCars()
-	return uu
-}
-
-// RemoveCarIDs removes the "cars" edge to Car entities by IDs.
-func (uu *UserUpdate) RemoveCarIDs(ids ...int) *UserUpdate {
-	uu.mutation.RemoveCarIDs(ids...)
-	return uu
-}
-
-// RemoveCars removes "cars" edges to Car entities.
-func (uu *UserUpdate) RemoveCars(c ...*Car) *UserUpdate {
-	ids := make([]int, len(c))
-	for i := range c {
-		ids[i] = c[i].ID
-	}
-	return uu.RemoveCarIDs(ids...)
-}
-
-// ClearGroups clears all "groups" edges to the Group entity.
-func (uu *UserUpdate) ClearGroups() *UserUpdate {
-	uu.mutation.ClearGroups()
-	return uu
-}
-
-// RemoveGroupIDs removes the "groups" edge to Group entities by IDs.
-func (uu *UserUpdate) RemoveGroupIDs(ids ...int) *UserUpdate {
-	uu.mutation.RemoveGroupIDs(ids...)
-	return uu
-}
-
-// RemoveGroups removes "groups" edges to Group entities.
-func (uu *UserUpdate) RemoveGroups(g ...*Group) *UserUpdate {
-	ids := make([]int, len(g))
-	for i := range g {
-		ids[i] = g[i].ID
-	}
-	return uu.RemoveGroupIDs(ids...)
 }
 
 // Save executes the query and returns the number of nodes affected by the update operation.
@@ -174,13 +203,40 @@ func (uu *UserUpdate) sqlSave(ctx context.Context) (n int, err error) {
 	if err := uu.check(); err != nil {
 		return n, err
 	}
-	_spec := sqlgraph.NewUpdateSpec(user.Table, user.Columns, sqlgraph.NewFieldSpec(user.FieldID, field.TypeInt))
+	_spec := sqlgraph.NewUpdateSpec(user.Table, user.Columns, sqlgraph.NewFieldSpec(user.FieldID, field.TypeString))
 	if ps := uu.mutation.predicates; len(ps) > 0 {
 		_spec.Predicate = func(selector *sql.Selector) {
 			for i := range ps {
 				ps[i](selector)
 			}
 		}
+	}
+	if value, ok := uu.mutation.CreatedAt(); ok {
+		_spec.SetField(user.FieldCreatedAt, field.TypeTime, value)
+	}
+	if value, ok := uu.mutation.CreatedBy(); ok {
+		_spec.SetField(user.FieldCreatedBy, field.TypeString, value)
+	}
+	if uu.mutation.CreatedByCleared() {
+		_spec.ClearField(user.FieldCreatedBy, field.TypeString)
+	}
+	if value, ok := uu.mutation.UpdatedAt(); ok {
+		_spec.SetField(user.FieldUpdatedAt, field.TypeTime, value)
+	}
+	if value, ok := uu.mutation.UpdatedBy(); ok {
+		_spec.SetField(user.FieldUpdatedBy, field.TypeString, value)
+	}
+	if uu.mutation.UpdatedByCleared() {
+		_spec.ClearField(user.FieldUpdatedBy, field.TypeString)
+	}
+	if value, ok := uu.mutation.DeletedAt(); ok {
+		_spec.SetField(user.FieldDeletedAt, field.TypeTime, value)
+	}
+	if value, ok := uu.mutation.DeletedBy(); ok {
+		_spec.SetField(user.FieldDeletedBy, field.TypeString, value)
+	}
+	if uu.mutation.DeletedByCleared() {
+		_spec.ClearField(user.FieldDeletedBy, field.TypeString)
 	}
 	if value, ok := uu.mutation.Age(); ok {
 		_spec.SetField(user.FieldAge, field.TypeInt, value)
@@ -190,96 +246,6 @@ func (uu *UserUpdate) sqlSave(ctx context.Context) (n int, err error) {
 	}
 	if value, ok := uu.mutation.Name(); ok {
 		_spec.SetField(user.FieldName, field.TypeString, value)
-	}
-	if uu.mutation.CarsCleared() {
-		edge := &sqlgraph.EdgeSpec{
-			Rel:     sqlgraph.O2M,
-			Inverse: false,
-			Table:   user.CarsTable,
-			Columns: []string{user.CarsColumn},
-			Bidi:    false,
-			Target: &sqlgraph.EdgeTarget{
-				IDSpec: sqlgraph.NewFieldSpec(car.FieldID, field.TypeInt),
-			},
-		}
-		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
-	}
-	if nodes := uu.mutation.RemovedCarsIDs(); len(nodes) > 0 && !uu.mutation.CarsCleared() {
-		edge := &sqlgraph.EdgeSpec{
-			Rel:     sqlgraph.O2M,
-			Inverse: false,
-			Table:   user.CarsTable,
-			Columns: []string{user.CarsColumn},
-			Bidi:    false,
-			Target: &sqlgraph.EdgeTarget{
-				IDSpec: sqlgraph.NewFieldSpec(car.FieldID, field.TypeInt),
-			},
-		}
-		for _, k := range nodes {
-			edge.Target.Nodes = append(edge.Target.Nodes, k)
-		}
-		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
-	}
-	if nodes := uu.mutation.CarsIDs(); len(nodes) > 0 {
-		edge := &sqlgraph.EdgeSpec{
-			Rel:     sqlgraph.O2M,
-			Inverse: false,
-			Table:   user.CarsTable,
-			Columns: []string{user.CarsColumn},
-			Bidi:    false,
-			Target: &sqlgraph.EdgeTarget{
-				IDSpec: sqlgraph.NewFieldSpec(car.FieldID, field.TypeInt),
-			},
-		}
-		for _, k := range nodes {
-			edge.Target.Nodes = append(edge.Target.Nodes, k)
-		}
-		_spec.Edges.Add = append(_spec.Edges.Add, edge)
-	}
-	if uu.mutation.GroupsCleared() {
-		edge := &sqlgraph.EdgeSpec{
-			Rel:     sqlgraph.M2M,
-			Inverse: true,
-			Table:   user.GroupsTable,
-			Columns: user.GroupsPrimaryKey,
-			Bidi:    false,
-			Target: &sqlgraph.EdgeTarget{
-				IDSpec: sqlgraph.NewFieldSpec(group.FieldID, field.TypeInt),
-			},
-		}
-		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
-	}
-	if nodes := uu.mutation.RemovedGroupsIDs(); len(nodes) > 0 && !uu.mutation.GroupsCleared() {
-		edge := &sqlgraph.EdgeSpec{
-			Rel:     sqlgraph.M2M,
-			Inverse: true,
-			Table:   user.GroupsTable,
-			Columns: user.GroupsPrimaryKey,
-			Bidi:    false,
-			Target: &sqlgraph.EdgeTarget{
-				IDSpec: sqlgraph.NewFieldSpec(group.FieldID, field.TypeInt),
-			},
-		}
-		for _, k := range nodes {
-			edge.Target.Nodes = append(edge.Target.Nodes, k)
-		}
-		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
-	}
-	if nodes := uu.mutation.GroupsIDs(); len(nodes) > 0 {
-		edge := &sqlgraph.EdgeSpec{
-			Rel:     sqlgraph.M2M,
-			Inverse: true,
-			Table:   user.GroupsTable,
-			Columns: user.GroupsPrimaryKey,
-			Bidi:    false,
-			Target: &sqlgraph.EdgeTarget{
-				IDSpec: sqlgraph.NewFieldSpec(group.FieldID, field.TypeInt),
-			},
-		}
-		for _, k := range nodes {
-			edge.Target.Nodes = append(edge.Target.Nodes, k)
-		}
-		_spec.Edges.Add = append(_spec.Edges.Add, edge)
 	}
 	if n, err = sqlgraph.UpdateNodes(ctx, uu.driver, _spec); err != nil {
 		if _, ok := err.(*sqlgraph.NotFoundError); ok {
@@ -299,6 +265,108 @@ type UserUpdateOne struct {
 	fields   []string
 	hooks    []Hook
 	mutation *UserMutation
+}
+
+// SetCreatedAt sets the "created_at" field.
+func (uuo *UserUpdateOne) SetCreatedAt(t time.Time) *UserUpdateOne {
+	uuo.mutation.SetCreatedAt(t)
+	return uuo
+}
+
+// SetNillableCreatedAt sets the "created_at" field if the given value is not nil.
+func (uuo *UserUpdateOne) SetNillableCreatedAt(t *time.Time) *UserUpdateOne {
+	if t != nil {
+		uuo.SetCreatedAt(*t)
+	}
+	return uuo
+}
+
+// SetCreatedBy sets the "created_by" field.
+func (uuo *UserUpdateOne) SetCreatedBy(s string) *UserUpdateOne {
+	uuo.mutation.SetCreatedBy(s)
+	return uuo
+}
+
+// SetNillableCreatedBy sets the "created_by" field if the given value is not nil.
+func (uuo *UserUpdateOne) SetNillableCreatedBy(s *string) *UserUpdateOne {
+	if s != nil {
+		uuo.SetCreatedBy(*s)
+	}
+	return uuo
+}
+
+// ClearCreatedBy clears the value of the "created_by" field.
+func (uuo *UserUpdateOne) ClearCreatedBy() *UserUpdateOne {
+	uuo.mutation.ClearCreatedBy()
+	return uuo
+}
+
+// SetUpdatedAt sets the "updated_at" field.
+func (uuo *UserUpdateOne) SetUpdatedAt(t time.Time) *UserUpdateOne {
+	uuo.mutation.SetUpdatedAt(t)
+	return uuo
+}
+
+// SetNillableUpdatedAt sets the "updated_at" field if the given value is not nil.
+func (uuo *UserUpdateOne) SetNillableUpdatedAt(t *time.Time) *UserUpdateOne {
+	if t != nil {
+		uuo.SetUpdatedAt(*t)
+	}
+	return uuo
+}
+
+// SetUpdatedBy sets the "updated_by" field.
+func (uuo *UserUpdateOne) SetUpdatedBy(s string) *UserUpdateOne {
+	uuo.mutation.SetUpdatedBy(s)
+	return uuo
+}
+
+// SetNillableUpdatedBy sets the "updated_by" field if the given value is not nil.
+func (uuo *UserUpdateOne) SetNillableUpdatedBy(s *string) *UserUpdateOne {
+	if s != nil {
+		uuo.SetUpdatedBy(*s)
+	}
+	return uuo
+}
+
+// ClearUpdatedBy clears the value of the "updated_by" field.
+func (uuo *UserUpdateOne) ClearUpdatedBy() *UserUpdateOne {
+	uuo.mutation.ClearUpdatedBy()
+	return uuo
+}
+
+// SetDeletedAt sets the "deleted_at" field.
+func (uuo *UserUpdateOne) SetDeletedAt(t time.Time) *UserUpdateOne {
+	uuo.mutation.SetDeletedAt(t)
+	return uuo
+}
+
+// SetNillableDeletedAt sets the "deleted_at" field if the given value is not nil.
+func (uuo *UserUpdateOne) SetNillableDeletedAt(t *time.Time) *UserUpdateOne {
+	if t != nil {
+		uuo.SetDeletedAt(*t)
+	}
+	return uuo
+}
+
+// SetDeletedBy sets the "deleted_by" field.
+func (uuo *UserUpdateOne) SetDeletedBy(s string) *UserUpdateOne {
+	uuo.mutation.SetDeletedBy(s)
+	return uuo
+}
+
+// SetNillableDeletedBy sets the "deleted_by" field if the given value is not nil.
+func (uuo *UserUpdateOne) SetNillableDeletedBy(s *string) *UserUpdateOne {
+	if s != nil {
+		uuo.SetDeletedBy(*s)
+	}
+	return uuo
+}
+
+// ClearDeletedBy clears the value of the "deleted_by" field.
+func (uuo *UserUpdateOne) ClearDeletedBy() *UserUpdateOne {
+	uuo.mutation.ClearDeletedBy()
+	return uuo
 }
 
 // SetAge sets the "age" field.
@@ -328,81 +396,9 @@ func (uuo *UserUpdateOne) SetNillableName(s *string) *UserUpdateOne {
 	return uuo
 }
 
-// AddCarIDs adds the "cars" edge to the Car entity by IDs.
-func (uuo *UserUpdateOne) AddCarIDs(ids ...int) *UserUpdateOne {
-	uuo.mutation.AddCarIDs(ids...)
-	return uuo
-}
-
-// AddCars adds the "cars" edges to the Car entity.
-func (uuo *UserUpdateOne) AddCars(c ...*Car) *UserUpdateOne {
-	ids := make([]int, len(c))
-	for i := range c {
-		ids[i] = c[i].ID
-	}
-	return uuo.AddCarIDs(ids...)
-}
-
-// AddGroupIDs adds the "groups" edge to the Group entity by IDs.
-func (uuo *UserUpdateOne) AddGroupIDs(ids ...int) *UserUpdateOne {
-	uuo.mutation.AddGroupIDs(ids...)
-	return uuo
-}
-
-// AddGroups adds the "groups" edges to the Group entity.
-func (uuo *UserUpdateOne) AddGroups(g ...*Group) *UserUpdateOne {
-	ids := make([]int, len(g))
-	for i := range g {
-		ids[i] = g[i].ID
-	}
-	return uuo.AddGroupIDs(ids...)
-}
-
 // Mutation returns the UserMutation object of the builder.
 func (uuo *UserUpdateOne) Mutation() *UserMutation {
 	return uuo.mutation
-}
-
-// ClearCars clears all "cars" edges to the Car entity.
-func (uuo *UserUpdateOne) ClearCars() *UserUpdateOne {
-	uuo.mutation.ClearCars()
-	return uuo
-}
-
-// RemoveCarIDs removes the "cars" edge to Car entities by IDs.
-func (uuo *UserUpdateOne) RemoveCarIDs(ids ...int) *UserUpdateOne {
-	uuo.mutation.RemoveCarIDs(ids...)
-	return uuo
-}
-
-// RemoveCars removes "cars" edges to Car entities.
-func (uuo *UserUpdateOne) RemoveCars(c ...*Car) *UserUpdateOne {
-	ids := make([]int, len(c))
-	for i := range c {
-		ids[i] = c[i].ID
-	}
-	return uuo.RemoveCarIDs(ids...)
-}
-
-// ClearGroups clears all "groups" edges to the Group entity.
-func (uuo *UserUpdateOne) ClearGroups() *UserUpdateOne {
-	uuo.mutation.ClearGroups()
-	return uuo
-}
-
-// RemoveGroupIDs removes the "groups" edge to Group entities by IDs.
-func (uuo *UserUpdateOne) RemoveGroupIDs(ids ...int) *UserUpdateOne {
-	uuo.mutation.RemoveGroupIDs(ids...)
-	return uuo
-}
-
-// RemoveGroups removes "groups" edges to Group entities.
-func (uuo *UserUpdateOne) RemoveGroups(g ...*Group) *UserUpdateOne {
-	ids := make([]int, len(g))
-	for i := range g {
-		ids[i] = g[i].ID
-	}
-	return uuo.RemoveGroupIDs(ids...)
 }
 
 // Where appends a list predicates to the UserUpdate builder.
@@ -459,7 +455,7 @@ func (uuo *UserUpdateOne) sqlSave(ctx context.Context) (_node *User, err error) 
 	if err := uuo.check(); err != nil {
 		return _node, err
 	}
-	_spec := sqlgraph.NewUpdateSpec(user.Table, user.Columns, sqlgraph.NewFieldSpec(user.FieldID, field.TypeInt))
+	_spec := sqlgraph.NewUpdateSpec(user.Table, user.Columns, sqlgraph.NewFieldSpec(user.FieldID, field.TypeString))
 	id, ok := uuo.mutation.ID()
 	if !ok {
 		return nil, &ValidationError{Name: "id", err: errors.New(`ent: missing "User.id" for update`)}
@@ -484,6 +480,33 @@ func (uuo *UserUpdateOne) sqlSave(ctx context.Context) (_node *User, err error) 
 			}
 		}
 	}
+	if value, ok := uuo.mutation.CreatedAt(); ok {
+		_spec.SetField(user.FieldCreatedAt, field.TypeTime, value)
+	}
+	if value, ok := uuo.mutation.CreatedBy(); ok {
+		_spec.SetField(user.FieldCreatedBy, field.TypeString, value)
+	}
+	if uuo.mutation.CreatedByCleared() {
+		_spec.ClearField(user.FieldCreatedBy, field.TypeString)
+	}
+	if value, ok := uuo.mutation.UpdatedAt(); ok {
+		_spec.SetField(user.FieldUpdatedAt, field.TypeTime, value)
+	}
+	if value, ok := uuo.mutation.UpdatedBy(); ok {
+		_spec.SetField(user.FieldUpdatedBy, field.TypeString, value)
+	}
+	if uuo.mutation.UpdatedByCleared() {
+		_spec.ClearField(user.FieldUpdatedBy, field.TypeString)
+	}
+	if value, ok := uuo.mutation.DeletedAt(); ok {
+		_spec.SetField(user.FieldDeletedAt, field.TypeTime, value)
+	}
+	if value, ok := uuo.mutation.DeletedBy(); ok {
+		_spec.SetField(user.FieldDeletedBy, field.TypeString, value)
+	}
+	if uuo.mutation.DeletedByCleared() {
+		_spec.ClearField(user.FieldDeletedBy, field.TypeString)
+	}
 	if value, ok := uuo.mutation.Age(); ok {
 		_spec.SetField(user.FieldAge, field.TypeInt, value)
 	}
@@ -492,96 +515,6 @@ func (uuo *UserUpdateOne) sqlSave(ctx context.Context) (_node *User, err error) 
 	}
 	if value, ok := uuo.mutation.Name(); ok {
 		_spec.SetField(user.FieldName, field.TypeString, value)
-	}
-	if uuo.mutation.CarsCleared() {
-		edge := &sqlgraph.EdgeSpec{
-			Rel:     sqlgraph.O2M,
-			Inverse: false,
-			Table:   user.CarsTable,
-			Columns: []string{user.CarsColumn},
-			Bidi:    false,
-			Target: &sqlgraph.EdgeTarget{
-				IDSpec: sqlgraph.NewFieldSpec(car.FieldID, field.TypeInt),
-			},
-		}
-		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
-	}
-	if nodes := uuo.mutation.RemovedCarsIDs(); len(nodes) > 0 && !uuo.mutation.CarsCleared() {
-		edge := &sqlgraph.EdgeSpec{
-			Rel:     sqlgraph.O2M,
-			Inverse: false,
-			Table:   user.CarsTable,
-			Columns: []string{user.CarsColumn},
-			Bidi:    false,
-			Target: &sqlgraph.EdgeTarget{
-				IDSpec: sqlgraph.NewFieldSpec(car.FieldID, field.TypeInt),
-			},
-		}
-		for _, k := range nodes {
-			edge.Target.Nodes = append(edge.Target.Nodes, k)
-		}
-		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
-	}
-	if nodes := uuo.mutation.CarsIDs(); len(nodes) > 0 {
-		edge := &sqlgraph.EdgeSpec{
-			Rel:     sqlgraph.O2M,
-			Inverse: false,
-			Table:   user.CarsTable,
-			Columns: []string{user.CarsColumn},
-			Bidi:    false,
-			Target: &sqlgraph.EdgeTarget{
-				IDSpec: sqlgraph.NewFieldSpec(car.FieldID, field.TypeInt),
-			},
-		}
-		for _, k := range nodes {
-			edge.Target.Nodes = append(edge.Target.Nodes, k)
-		}
-		_spec.Edges.Add = append(_spec.Edges.Add, edge)
-	}
-	if uuo.mutation.GroupsCleared() {
-		edge := &sqlgraph.EdgeSpec{
-			Rel:     sqlgraph.M2M,
-			Inverse: true,
-			Table:   user.GroupsTable,
-			Columns: user.GroupsPrimaryKey,
-			Bidi:    false,
-			Target: &sqlgraph.EdgeTarget{
-				IDSpec: sqlgraph.NewFieldSpec(group.FieldID, field.TypeInt),
-			},
-		}
-		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
-	}
-	if nodes := uuo.mutation.RemovedGroupsIDs(); len(nodes) > 0 && !uuo.mutation.GroupsCleared() {
-		edge := &sqlgraph.EdgeSpec{
-			Rel:     sqlgraph.M2M,
-			Inverse: true,
-			Table:   user.GroupsTable,
-			Columns: user.GroupsPrimaryKey,
-			Bidi:    false,
-			Target: &sqlgraph.EdgeTarget{
-				IDSpec: sqlgraph.NewFieldSpec(group.FieldID, field.TypeInt),
-			},
-		}
-		for _, k := range nodes {
-			edge.Target.Nodes = append(edge.Target.Nodes, k)
-		}
-		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
-	}
-	if nodes := uuo.mutation.GroupsIDs(); len(nodes) > 0 {
-		edge := &sqlgraph.EdgeSpec{
-			Rel:     sqlgraph.M2M,
-			Inverse: true,
-			Table:   user.GroupsTable,
-			Columns: user.GroupsPrimaryKey,
-			Bidi:    false,
-			Target: &sqlgraph.EdgeTarget{
-				IDSpec: sqlgraph.NewFieldSpec(group.FieldID, field.TypeInt),
-			},
-		}
-		for _, k := range nodes {
-			edge.Target.Nodes = append(edge.Target.Nodes, k)
-		}
-		_spec.Edges.Add = append(_spec.Edges.Add, edge)
 	}
 	_node = &User{config: uuo.config}
 	_spec.Assign = _node.assignValues

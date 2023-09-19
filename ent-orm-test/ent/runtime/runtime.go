@@ -2,7 +2,50 @@
 
 package runtime
 
-// The schema-stitching logic is generated in ent-orm-test/ent/runtime.go
+import (
+	"ent-orm-test/ent/schema"
+	"ent-orm-test/ent/user"
+	"time"
+
+	"github.com/rs/xid"
+)
+
+// The init function reads all schema descriptors with runtime code
+// (default values, validators, hooks and policies) and stitches it
+// to their package variables.
+func init() {
+	userMixin := schema.User{}.Mixin()
+	userMixinInters0 := userMixin[0].Interceptors()
+	user.Interceptors[0] = userMixinInters0[0]
+	userMixinFields0 := userMixin[0].Fields()
+	_ = userMixinFields0
+	userFields := schema.User{}.Fields()
+	_ = userFields
+	// userDescCreatedAt is the schema descriptor for created_at field.
+	userDescCreatedAt := userMixinFields0[1].Descriptor()
+	// user.DefaultCreatedAt holds the default value on creation for the created_at field.
+	user.DefaultCreatedAt = userDescCreatedAt.Default.(func() time.Time)
+	// userDescUpdatedAt is the schema descriptor for updated_at field.
+	userDescUpdatedAt := userMixinFields0[3].Descriptor()
+	// user.DefaultUpdatedAt holds the default value on creation for the updated_at field.
+	user.DefaultUpdatedAt = userDescUpdatedAt.Default.(func() time.Time)
+	// userDescDeletedAt is the schema descriptor for deleted_at field.
+	userDescDeletedAt := userMixinFields0[5].Descriptor()
+	// user.DefaultDeletedAt holds the default value on creation for the deleted_at field.
+	user.DefaultDeletedAt = userDescDeletedAt.Default.(func() time.Time)
+	// userDescAge is the schema descriptor for age field.
+	userDescAge := userFields[0].Descriptor()
+	// user.AgeValidator is a validator for the "age" field. It is called by the builders before save.
+	user.AgeValidator = userDescAge.Validators[0].(func(int) error)
+	// userDescName is the schema descriptor for name field.
+	userDescName := userFields[1].Descriptor()
+	// user.DefaultName holds the default value on creation for the name field.
+	user.DefaultName = userDescName.Default.(string)
+	// userDescID is the schema descriptor for id field.
+	userDescID := userMixinFields0[0].Descriptor()
+	// user.DefaultID holds the default value on creation for the id field.
+	user.DefaultID = userDescID.Default.(func() xid.ID)
+}
 
 const (
 	Version = "v0.12.3"                                         // Version of ent codegen.
