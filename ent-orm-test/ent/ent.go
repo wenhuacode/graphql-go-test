@@ -4,6 +4,7 @@ package ent
 
 import (
 	"context"
+	"ent-orm-test/ent/pet"
 	"ent-orm-test/ent/user"
 	"errors"
 	"fmt"
@@ -73,6 +74,7 @@ var (
 func checkColumn(table, column string) error {
 	initCheck.Do(func() {
 		columnCheck = sql.NewColumnCheck(map[string]func(string) bool{
+			pet.Table:  pet.ValidColumn,
 			user.Table: user.ValidColumn,
 		})
 	})

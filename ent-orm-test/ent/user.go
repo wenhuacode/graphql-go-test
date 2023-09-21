@@ -26,6 +26,8 @@ type User struct {
 	UpdatedAt time.Time `json:"updated_at,omitempty" gqlgen:"updated_at"`
 	// 更新人
 	UpdatedBy string `json:"updated_by,omitempty" gqlgen:"updated_by"`
+	// 是否删除
+	IsDeleted bool `json:"is_deleted,omitempty" gqlgen:"is_deleted"`
 	// 删除时间
 	DeletedAt time.Time `json:"deleted_at,omitempty" gqlgen:"deleted_at"`
 	// 删除人
@@ -33,8 +35,76 @@ type User struct {
 	// Age holds the value of the "age" field.
 	Age int `json:"age,omitempty"`
 	// Name holds the value of the "name" field.
-	Name         string `json:"name,omitempty"`
+	Name string `json:"name,omitempty"`
+	// Edges holds the relations/edges for other nodes in the graph.
+	// The values are being populated by the UserQuery when eager-loading is set.
+	Edges        UserEdges `json:"edges"`
+	user_spouse  *xid.ID
+	user_next    *xid.ID
 	selectValues sql.SelectValues
+}
+
+// UserEdges holds the relations/edges for other nodes in the graph.
+type UserEdges struct {
+	// 配偶
+	Spouse *User `json:"spouse,omitempty"`
+	// 同类型-递归
+	Prev *User `json:"prev,omitempty"`
+	// Next holds the value of the next edge.
+	Next *User `json:"next,omitempty"`
+	// Pets holds the value of the pets edge.
+	Pets []*Pet `json:"pets,omitempty"`
+	// loadedTypes holds the information for reporting if a
+	// type was loaded (or requested) in eager-loading or not.
+	loadedTypes [4]bool
+}
+
+// SpouseOrErr returns the Spouse value or an error if the edge
+// was not loaded in eager-loading, or loaded but was not found.
+func (e UserEdges) SpouseOrErr() (*User, error) {
+	if e.loadedTypes[0] {
+		if e.Spouse == nil {
+			// Edge was loaded but was not found.
+			return nil, &NotFoundError{label: user.Label}
+		}
+		return e.Spouse, nil
+	}
+	return nil, &NotLoadedError{edge: "spouse"}
+}
+
+// PrevOrErr returns the Prev value or an error if the edge
+// was not loaded in eager-loading, or loaded but was not found.
+func (e UserEdges) PrevOrErr() (*User, error) {
+	if e.loadedTypes[1] {
+		if e.Prev == nil {
+			// Edge was loaded but was not found.
+			return nil, &NotFoundError{label: user.Label}
+		}
+		return e.Prev, nil
+	}
+	return nil, &NotLoadedError{edge: "prev"}
+}
+
+// NextOrErr returns the Next value or an error if the edge
+// was not loaded in eager-loading, or loaded but was not found.
+func (e UserEdges) NextOrErr() (*User, error) {
+	if e.loadedTypes[2] {
+		if e.Next == nil {
+			// Edge was loaded but was not found.
+			return nil, &NotFoundError{label: user.Label}
+		}
+		return e.Next, nil
+	}
+	return nil, &NotLoadedError{edge: "next"}
+}
+
+// PetsOrErr returns the Pets value or an error if the edge
+// was not loaded in eager-loading.
+func (e UserEdges) PetsOrErr() ([]*Pet, error) {
+	if e.loadedTypes[3] {
+		return e.Pets, nil
+	}
+	return nil, &NotLoadedError{edge: "pets"}
 }
 
 // scanValues returns the types for scanning values from sql.Rows.
@@ -42,6 +112,8 @@ func (*User) scanValues(columns []string) ([]any, error) {
 	values := make([]any, len(columns))
 	for i := range columns {
 		switch columns[i] {
+		case user.FieldIsDeleted:
+			values[i] = new(sql.NullBool)
 		case user.FieldAge:
 			values[i] = new(sql.NullInt64)
 		case user.FieldCreatedBy, user.FieldUpdatedBy, user.FieldDeletedBy, user.FieldName:
@@ -50,6 +122,10 @@ func (*User) scanValues(columns []string) ([]any, error) {
 			values[i] = new(sql.NullTime)
 		case user.FieldID:
 			values[i] = new(xid.ID)
+		case user.ForeignKeys[0]: // user_spouse
+			values[i] = &sql.NullScanner{S: new(xid.ID)}
+		case user.ForeignKeys[1]: // user_next
+			values[i] = &sql.NullScanner{S: new(xid.ID)}
 		default:
 			values[i] = new(sql.UnknownType)
 		}
@@ -95,6 +171,12 @@ func (u *User) assignValues(columns []string, values []any) error {
 			} else if value.Valid {
 				u.UpdatedBy = value.String
 			}
+		case user.FieldIsDeleted:
+			if value, ok := values[i].(*sql.NullBool); !ok {
+				return fmt.Errorf("unexpected type %T for field is_deleted", values[i])
+			} else if value.Valid {
+				u.IsDeleted = value.Bool
+			}
 		case user.FieldDeletedAt:
 			if value, ok := values[i].(*sql.NullTime); !ok {
 				return fmt.Errorf("unexpected type %T for field deleted_at", values[i])
@@ -119,6 +201,20 @@ func (u *User) assignValues(columns []string, values []any) error {
 			} else if value.Valid {
 				u.Name = value.String
 			}
+		case user.ForeignKeys[0]:
+			if value, ok := values[i].(*sql.NullScanner); !ok {
+				return fmt.Errorf("unexpected type %T for field user_spouse", values[i])
+			} else if value.Valid {
+				u.user_spouse = new(xid.ID)
+				*u.user_spouse = *value.S.(*xid.ID)
+			}
+		case user.ForeignKeys[1]:
+			if value, ok := values[i].(*sql.NullScanner); !ok {
+				return fmt.Errorf("unexpected type %T for field user_next", values[i])
+			} else if value.Valid {
+				u.user_next = new(xid.ID)
+				*u.user_next = *value.S.(*xid.ID)
+			}
 		default:
 			u.selectValues.Set(columns[i], values[i])
 		}
@@ -130,6 +226,26 @@ func (u *User) assignValues(columns []string, values []any) error {
 // This includes values selected through modifiers, order, etc.
 func (u *User) Value(name string) (ent.Value, error) {
 	return u.selectValues.Get(name)
+}
+
+// QuerySpouse queries the "spouse" edge of the User entity.
+func (u *User) QuerySpouse() *UserQuery {
+	return NewUserClient(u.config).QuerySpouse(u)
+}
+
+// QueryPrev queries the "prev" edge of the User entity.
+func (u *User) QueryPrev() *UserQuery {
+	return NewUserClient(u.config).QueryPrev(u)
+}
+
+// QueryNext queries the "next" edge of the User entity.
+func (u *User) QueryNext() *UserQuery {
+	return NewUserClient(u.config).QueryNext(u)
+}
+
+// QueryPets queries the "pets" edge of the User entity.
+func (u *User) QueryPets() *PetQuery {
+	return NewUserClient(u.config).QueryPets(u)
 }
 
 // Update returns a builder for updating this User.
@@ -166,6 +282,9 @@ func (u *User) String() string {
 	builder.WriteString(", ")
 	builder.WriteString("updated_by=")
 	builder.WriteString(u.UpdatedBy)
+	builder.WriteString(", ")
+	builder.WriteString("is_deleted=")
+	builder.WriteString(fmt.Sprintf("%v", u.IsDeleted))
 	builder.WriteString(", ")
 	builder.WriteString("deleted_at=")
 	builder.WriteString(u.DeletedAt.Format(time.ANSIC))

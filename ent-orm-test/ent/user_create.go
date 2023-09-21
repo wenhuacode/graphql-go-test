@@ -4,6 +4,7 @@ package ent
 
 import (
 	"context"
+	"ent-orm-test/ent/pet"
 	"ent-orm-test/ent/user"
 	"errors"
 	"fmt"
@@ -77,6 +78,20 @@ func (uc *UserCreate) SetNillableUpdatedBy(s *string) *UserCreate {
 	return uc
 }
 
+// SetIsDeleted sets the "is_deleted" field.
+func (uc *UserCreate) SetIsDeleted(b bool) *UserCreate {
+	uc.mutation.SetIsDeleted(b)
+	return uc
+}
+
+// SetNillableIsDeleted sets the "is_deleted" field if the given value is not nil.
+func (uc *UserCreate) SetNillableIsDeleted(b *bool) *UserCreate {
+	if b != nil {
+		uc.SetIsDeleted(*b)
+	}
+	return uc
+}
+
 // SetDeletedAt sets the "deleted_at" field.
 func (uc *UserCreate) SetDeletedAt(t time.Time) *UserCreate {
 	uc.mutation.SetDeletedAt(t)
@@ -139,6 +154,78 @@ func (uc *UserCreate) SetNillableID(x *xid.ID) *UserCreate {
 	return uc
 }
 
+// SetSpouseID sets the "spouse" edge to the User entity by ID.
+func (uc *UserCreate) SetSpouseID(id xid.ID) *UserCreate {
+	uc.mutation.SetSpouseID(id)
+	return uc
+}
+
+// SetNillableSpouseID sets the "spouse" edge to the User entity by ID if the given value is not nil.
+func (uc *UserCreate) SetNillableSpouseID(id *xid.ID) *UserCreate {
+	if id != nil {
+		uc = uc.SetSpouseID(*id)
+	}
+	return uc
+}
+
+// SetSpouse sets the "spouse" edge to the User entity.
+func (uc *UserCreate) SetSpouse(u *User) *UserCreate {
+	return uc.SetSpouseID(u.ID)
+}
+
+// SetPrevID sets the "prev" edge to the User entity by ID.
+func (uc *UserCreate) SetPrevID(id xid.ID) *UserCreate {
+	uc.mutation.SetPrevID(id)
+	return uc
+}
+
+// SetNillablePrevID sets the "prev" edge to the User entity by ID if the given value is not nil.
+func (uc *UserCreate) SetNillablePrevID(id *xid.ID) *UserCreate {
+	if id != nil {
+		uc = uc.SetPrevID(*id)
+	}
+	return uc
+}
+
+// SetPrev sets the "prev" edge to the User entity.
+func (uc *UserCreate) SetPrev(u *User) *UserCreate {
+	return uc.SetPrevID(u.ID)
+}
+
+// SetNextID sets the "next" edge to the User entity by ID.
+func (uc *UserCreate) SetNextID(id xid.ID) *UserCreate {
+	uc.mutation.SetNextID(id)
+	return uc
+}
+
+// SetNillableNextID sets the "next" edge to the User entity by ID if the given value is not nil.
+func (uc *UserCreate) SetNillableNextID(id *xid.ID) *UserCreate {
+	if id != nil {
+		uc = uc.SetNextID(*id)
+	}
+	return uc
+}
+
+// SetNext sets the "next" edge to the User entity.
+func (uc *UserCreate) SetNext(u *User) *UserCreate {
+	return uc.SetNextID(u.ID)
+}
+
+// AddPetIDs adds the "pets" edge to the Pet entity by IDs.
+func (uc *UserCreate) AddPetIDs(ids ...xid.ID) *UserCreate {
+	uc.mutation.AddPetIDs(ids...)
+	return uc
+}
+
+// AddPets adds the "pets" edges to the Pet entity.
+func (uc *UserCreate) AddPets(p ...*Pet) *UserCreate {
+	ids := make([]xid.ID, len(p))
+	for i := range p {
+		ids[i] = p[i].ID
+	}
+	return uc.AddPetIDs(ids...)
+}
+
 // Mutation returns the UserMutation object of the builder.
 func (uc *UserCreate) Mutation() *UserMutation {
 	return uc.mutation
@@ -146,7 +233,9 @@ func (uc *UserCreate) Mutation() *UserMutation {
 
 // Save creates the User in the database.
 func (uc *UserCreate) Save(ctx context.Context) (*User, error) {
-	uc.defaults()
+	if err := uc.defaults(); err != nil {
+		return nil, err
+	}
 	return withHooks(ctx, uc.sqlSave, uc.mutation, uc.hooks)
 }
 
@@ -173,27 +262,33 @@ func (uc *UserCreate) ExecX(ctx context.Context) {
 }
 
 // defaults sets the default values of the builder before save.
-func (uc *UserCreate) defaults() {
+func (uc *UserCreate) defaults() error {
 	if _, ok := uc.mutation.CreatedAt(); !ok {
+		if user.DefaultCreatedAt == nil {
+			return fmt.Errorf("ent: uninitialized user.DefaultCreatedAt (forgotten import ent/runtime?)")
+		}
 		v := user.DefaultCreatedAt()
 		uc.mutation.SetCreatedAt(v)
 	}
 	if _, ok := uc.mutation.UpdatedAt(); !ok {
+		if user.DefaultUpdatedAt == nil {
+			return fmt.Errorf("ent: uninitialized user.DefaultUpdatedAt (forgotten import ent/runtime?)")
+		}
 		v := user.DefaultUpdatedAt()
 		uc.mutation.SetUpdatedAt(v)
-	}
-	if _, ok := uc.mutation.DeletedAt(); !ok {
-		v := user.DefaultDeletedAt()
-		uc.mutation.SetDeletedAt(v)
 	}
 	if _, ok := uc.mutation.Name(); !ok {
 		v := user.DefaultName
 		uc.mutation.SetName(v)
 	}
 	if _, ok := uc.mutation.ID(); !ok {
+		if user.DefaultID == nil {
+			return fmt.Errorf("ent: uninitialized user.DefaultID (forgotten import ent/runtime?)")
+		}
 		v := user.DefaultID()
 		uc.mutation.SetID(v)
 	}
+	return nil
 }
 
 // check runs all checks and user-defined validators on the builder.
@@ -203,9 +298,6 @@ func (uc *UserCreate) check() error {
 	}
 	if _, ok := uc.mutation.UpdatedAt(); !ok {
 		return &ValidationError{Name: "updated_at", err: errors.New(`ent: missing required field "User.updated_at"`)}
-	}
-	if _, ok := uc.mutation.DeletedAt(); !ok {
-		return &ValidationError{Name: "deleted_at", err: errors.New(`ent: missing required field "User.deleted_at"`)}
 	}
 	if _, ok := uc.mutation.Age(); !ok {
 		return &ValidationError{Name: "age", err: errors.New(`ent: missing required field "User.age"`)}
@@ -269,6 +361,10 @@ func (uc *UserCreate) createSpec() (*User, *sqlgraph.CreateSpec) {
 		_spec.SetField(user.FieldUpdatedBy, field.TypeString, value)
 		_node.UpdatedBy = value
 	}
+	if value, ok := uc.mutation.IsDeleted(); ok {
+		_spec.SetField(user.FieldIsDeleted, field.TypeBool, value)
+		_node.IsDeleted = value
+	}
 	if value, ok := uc.mutation.DeletedAt(); ok {
 		_spec.SetField(user.FieldDeletedAt, field.TypeTime, value)
 		_node.DeletedAt = value
@@ -284,6 +380,72 @@ func (uc *UserCreate) createSpec() (*User, *sqlgraph.CreateSpec) {
 	if value, ok := uc.mutation.Name(); ok {
 		_spec.SetField(user.FieldName, field.TypeString, value)
 		_node.Name = value
+	}
+	if nodes := uc.mutation.SpouseIDs(); len(nodes) > 0 {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.O2O,
+			Inverse: false,
+			Table:   user.SpouseTable,
+			Columns: []string{user.SpouseColumn},
+			Bidi:    true,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: sqlgraph.NewFieldSpec(user.FieldID, field.TypeString),
+			},
+		}
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_node.user_spouse = &nodes[0]
+		_spec.Edges = append(_spec.Edges, edge)
+	}
+	if nodes := uc.mutation.PrevIDs(); len(nodes) > 0 {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.O2O,
+			Inverse: true,
+			Table:   user.PrevTable,
+			Columns: []string{user.PrevColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: sqlgraph.NewFieldSpec(user.FieldID, field.TypeString),
+			},
+		}
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_node.user_next = &nodes[0]
+		_spec.Edges = append(_spec.Edges, edge)
+	}
+	if nodes := uc.mutation.NextIDs(); len(nodes) > 0 {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.O2O,
+			Inverse: false,
+			Table:   user.NextTable,
+			Columns: []string{user.NextColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: sqlgraph.NewFieldSpec(user.FieldID, field.TypeString),
+			},
+		}
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_spec.Edges = append(_spec.Edges, edge)
+	}
+	if nodes := uc.mutation.PetsIDs(); len(nodes) > 0 {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.O2M,
+			Inverse: false,
+			Table:   user.PetsTable,
+			Columns: []string{user.PetsColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: sqlgraph.NewFieldSpec(pet.FieldID, field.TypeString),
+			},
+		}
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_spec.Edges = append(_spec.Edges, edge)
 	}
 	return _node, _spec
 }

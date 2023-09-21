@@ -4,6 +4,7 @@ package ent
 
 import (
 	"context"
+	"ent-orm-test/ent/pet"
 	"ent-orm-test/ent/predicate"
 	"ent-orm-test/ent/user"
 	"errors"
@@ -13,6 +14,7 @@ import (
 	"entgo.io/ent/dialect/sql"
 	"entgo.io/ent/dialect/sql/sqlgraph"
 	"entgo.io/ent/schema/field"
+	"github.com/rs/xid"
 )
 
 // UserUpdate is the builder for updating User entities.
@@ -96,6 +98,26 @@ func (uu *UserUpdate) ClearUpdatedBy() *UserUpdate {
 	return uu
 }
 
+// SetIsDeleted sets the "is_deleted" field.
+func (uu *UserUpdate) SetIsDeleted(b bool) *UserUpdate {
+	uu.mutation.SetIsDeleted(b)
+	return uu
+}
+
+// SetNillableIsDeleted sets the "is_deleted" field if the given value is not nil.
+func (uu *UserUpdate) SetNillableIsDeleted(b *bool) *UserUpdate {
+	if b != nil {
+		uu.SetIsDeleted(*b)
+	}
+	return uu
+}
+
+// ClearIsDeleted clears the value of the "is_deleted" field.
+func (uu *UserUpdate) ClearIsDeleted() *UserUpdate {
+	uu.mutation.ClearIsDeleted()
+	return uu
+}
+
 // SetDeletedAt sets the "deleted_at" field.
 func (uu *UserUpdate) SetDeletedAt(t time.Time) *UserUpdate {
 	uu.mutation.SetDeletedAt(t)
@@ -107,6 +129,12 @@ func (uu *UserUpdate) SetNillableDeletedAt(t *time.Time) *UserUpdate {
 	if t != nil {
 		uu.SetDeletedAt(*t)
 	}
+	return uu
+}
+
+// ClearDeletedAt clears the value of the "deleted_at" field.
+func (uu *UserUpdate) ClearDeletedAt() *UserUpdate {
+	uu.mutation.ClearDeletedAt()
 	return uu
 }
 
@@ -157,9 +185,120 @@ func (uu *UserUpdate) SetNillableName(s *string) *UserUpdate {
 	return uu
 }
 
+// SetSpouseID sets the "spouse" edge to the User entity by ID.
+func (uu *UserUpdate) SetSpouseID(id xid.ID) *UserUpdate {
+	uu.mutation.SetSpouseID(id)
+	return uu
+}
+
+// SetNillableSpouseID sets the "spouse" edge to the User entity by ID if the given value is not nil.
+func (uu *UserUpdate) SetNillableSpouseID(id *xid.ID) *UserUpdate {
+	if id != nil {
+		uu = uu.SetSpouseID(*id)
+	}
+	return uu
+}
+
+// SetSpouse sets the "spouse" edge to the User entity.
+func (uu *UserUpdate) SetSpouse(u *User) *UserUpdate {
+	return uu.SetSpouseID(u.ID)
+}
+
+// SetPrevID sets the "prev" edge to the User entity by ID.
+func (uu *UserUpdate) SetPrevID(id xid.ID) *UserUpdate {
+	uu.mutation.SetPrevID(id)
+	return uu
+}
+
+// SetNillablePrevID sets the "prev" edge to the User entity by ID if the given value is not nil.
+func (uu *UserUpdate) SetNillablePrevID(id *xid.ID) *UserUpdate {
+	if id != nil {
+		uu = uu.SetPrevID(*id)
+	}
+	return uu
+}
+
+// SetPrev sets the "prev" edge to the User entity.
+func (uu *UserUpdate) SetPrev(u *User) *UserUpdate {
+	return uu.SetPrevID(u.ID)
+}
+
+// SetNextID sets the "next" edge to the User entity by ID.
+func (uu *UserUpdate) SetNextID(id xid.ID) *UserUpdate {
+	uu.mutation.SetNextID(id)
+	return uu
+}
+
+// SetNillableNextID sets the "next" edge to the User entity by ID if the given value is not nil.
+func (uu *UserUpdate) SetNillableNextID(id *xid.ID) *UserUpdate {
+	if id != nil {
+		uu = uu.SetNextID(*id)
+	}
+	return uu
+}
+
+// SetNext sets the "next" edge to the User entity.
+func (uu *UserUpdate) SetNext(u *User) *UserUpdate {
+	return uu.SetNextID(u.ID)
+}
+
+// AddPetIDs adds the "pets" edge to the Pet entity by IDs.
+func (uu *UserUpdate) AddPetIDs(ids ...xid.ID) *UserUpdate {
+	uu.mutation.AddPetIDs(ids...)
+	return uu
+}
+
+// AddPets adds the "pets" edges to the Pet entity.
+func (uu *UserUpdate) AddPets(p ...*Pet) *UserUpdate {
+	ids := make([]xid.ID, len(p))
+	for i := range p {
+		ids[i] = p[i].ID
+	}
+	return uu.AddPetIDs(ids...)
+}
+
 // Mutation returns the UserMutation object of the builder.
 func (uu *UserUpdate) Mutation() *UserMutation {
 	return uu.mutation
+}
+
+// ClearSpouse clears the "spouse" edge to the User entity.
+func (uu *UserUpdate) ClearSpouse() *UserUpdate {
+	uu.mutation.ClearSpouse()
+	return uu
+}
+
+// ClearPrev clears the "prev" edge to the User entity.
+func (uu *UserUpdate) ClearPrev() *UserUpdate {
+	uu.mutation.ClearPrev()
+	return uu
+}
+
+// ClearNext clears the "next" edge to the User entity.
+func (uu *UserUpdate) ClearNext() *UserUpdate {
+	uu.mutation.ClearNext()
+	return uu
+}
+
+// ClearPets clears all "pets" edges to the Pet entity.
+func (uu *UserUpdate) ClearPets() *UserUpdate {
+	uu.mutation.ClearPets()
+	return uu
+}
+
+// RemovePetIDs removes the "pets" edge to Pet entities by IDs.
+func (uu *UserUpdate) RemovePetIDs(ids ...xid.ID) *UserUpdate {
+	uu.mutation.RemovePetIDs(ids...)
+	return uu
+}
+
+// RemovePets removes "pets" edges to Pet entities.
+func (uu *UserUpdate) RemovePets(p ...*Pet) *UserUpdate {
+	ids := make([]xid.ID, len(p))
+	for i := range p {
+		ids[i] = p[i].ID
+	}
+	return uu.RemovePetIDs(ids...)
 }
 
 // Save executes the query and returns the number of nodes affected by the update operation.
@@ -229,8 +368,17 @@ func (uu *UserUpdate) sqlSave(ctx context.Context) (n int, err error) {
 	if uu.mutation.UpdatedByCleared() {
 		_spec.ClearField(user.FieldUpdatedBy, field.TypeString)
 	}
+	if value, ok := uu.mutation.IsDeleted(); ok {
+		_spec.SetField(user.FieldIsDeleted, field.TypeBool, value)
+	}
+	if uu.mutation.IsDeletedCleared() {
+		_spec.ClearField(user.FieldIsDeleted, field.TypeBool)
+	}
 	if value, ok := uu.mutation.DeletedAt(); ok {
 		_spec.SetField(user.FieldDeletedAt, field.TypeTime, value)
+	}
+	if uu.mutation.DeletedAtCleared() {
+		_spec.ClearField(user.FieldDeletedAt, field.TypeTime)
 	}
 	if value, ok := uu.mutation.DeletedBy(); ok {
 		_spec.SetField(user.FieldDeletedBy, field.TypeString, value)
@@ -246,6 +394,138 @@ func (uu *UserUpdate) sqlSave(ctx context.Context) (n int, err error) {
 	}
 	if value, ok := uu.mutation.Name(); ok {
 		_spec.SetField(user.FieldName, field.TypeString, value)
+	}
+	if uu.mutation.SpouseCleared() {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.O2O,
+			Inverse: false,
+			Table:   user.SpouseTable,
+			Columns: []string{user.SpouseColumn},
+			Bidi:    true,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: sqlgraph.NewFieldSpec(user.FieldID, field.TypeString),
+			},
+		}
+		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
+	}
+	if nodes := uu.mutation.SpouseIDs(); len(nodes) > 0 {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.O2O,
+			Inverse: false,
+			Table:   user.SpouseTable,
+			Columns: []string{user.SpouseColumn},
+			Bidi:    true,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: sqlgraph.NewFieldSpec(user.FieldID, field.TypeString),
+			},
+		}
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_spec.Edges.Add = append(_spec.Edges.Add, edge)
+	}
+	if uu.mutation.PrevCleared() {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.O2O,
+			Inverse: true,
+			Table:   user.PrevTable,
+			Columns: []string{user.PrevColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: sqlgraph.NewFieldSpec(user.FieldID, field.TypeString),
+			},
+		}
+		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
+	}
+	if nodes := uu.mutation.PrevIDs(); len(nodes) > 0 {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.O2O,
+			Inverse: true,
+			Table:   user.PrevTable,
+			Columns: []string{user.PrevColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: sqlgraph.NewFieldSpec(user.FieldID, field.TypeString),
+			},
+		}
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_spec.Edges.Add = append(_spec.Edges.Add, edge)
+	}
+	if uu.mutation.NextCleared() {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.O2O,
+			Inverse: false,
+			Table:   user.NextTable,
+			Columns: []string{user.NextColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: sqlgraph.NewFieldSpec(user.FieldID, field.TypeString),
+			},
+		}
+		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
+	}
+	if nodes := uu.mutation.NextIDs(); len(nodes) > 0 {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.O2O,
+			Inverse: false,
+			Table:   user.NextTable,
+			Columns: []string{user.NextColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: sqlgraph.NewFieldSpec(user.FieldID, field.TypeString),
+			},
+		}
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_spec.Edges.Add = append(_spec.Edges.Add, edge)
+	}
+	if uu.mutation.PetsCleared() {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.O2M,
+			Inverse: false,
+			Table:   user.PetsTable,
+			Columns: []string{user.PetsColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: sqlgraph.NewFieldSpec(pet.FieldID, field.TypeString),
+			},
+		}
+		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
+	}
+	if nodes := uu.mutation.RemovedPetsIDs(); len(nodes) > 0 && !uu.mutation.PetsCleared() {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.O2M,
+			Inverse: false,
+			Table:   user.PetsTable,
+			Columns: []string{user.PetsColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: sqlgraph.NewFieldSpec(pet.FieldID, field.TypeString),
+			},
+		}
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
+	}
+	if nodes := uu.mutation.PetsIDs(); len(nodes) > 0 {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.O2M,
+			Inverse: false,
+			Table:   user.PetsTable,
+			Columns: []string{user.PetsColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: sqlgraph.NewFieldSpec(pet.FieldID, field.TypeString),
+			},
+		}
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_spec.Edges.Add = append(_spec.Edges.Add, edge)
 	}
 	if n, err = sqlgraph.UpdateNodes(ctx, uu.driver, _spec); err != nil {
 		if _, ok := err.(*sqlgraph.NotFoundError); ok {
@@ -335,6 +615,26 @@ func (uuo *UserUpdateOne) ClearUpdatedBy() *UserUpdateOne {
 	return uuo
 }
 
+// SetIsDeleted sets the "is_deleted" field.
+func (uuo *UserUpdateOne) SetIsDeleted(b bool) *UserUpdateOne {
+	uuo.mutation.SetIsDeleted(b)
+	return uuo
+}
+
+// SetNillableIsDeleted sets the "is_deleted" field if the given value is not nil.
+func (uuo *UserUpdateOne) SetNillableIsDeleted(b *bool) *UserUpdateOne {
+	if b != nil {
+		uuo.SetIsDeleted(*b)
+	}
+	return uuo
+}
+
+// ClearIsDeleted clears the value of the "is_deleted" field.
+func (uuo *UserUpdateOne) ClearIsDeleted() *UserUpdateOne {
+	uuo.mutation.ClearIsDeleted()
+	return uuo
+}
+
 // SetDeletedAt sets the "deleted_at" field.
 func (uuo *UserUpdateOne) SetDeletedAt(t time.Time) *UserUpdateOne {
 	uuo.mutation.SetDeletedAt(t)
@@ -346,6 +646,12 @@ func (uuo *UserUpdateOne) SetNillableDeletedAt(t *time.Time) *UserUpdateOne {
 	if t != nil {
 		uuo.SetDeletedAt(*t)
 	}
+	return uuo
+}
+
+// ClearDeletedAt clears the value of the "deleted_at" field.
+func (uuo *UserUpdateOne) ClearDeletedAt() *UserUpdateOne {
+	uuo.mutation.ClearDeletedAt()
 	return uuo
 }
 
@@ -396,9 +702,120 @@ func (uuo *UserUpdateOne) SetNillableName(s *string) *UserUpdateOne {
 	return uuo
 }
 
+// SetSpouseID sets the "spouse" edge to the User entity by ID.
+func (uuo *UserUpdateOne) SetSpouseID(id xid.ID) *UserUpdateOne {
+	uuo.mutation.SetSpouseID(id)
+	return uuo
+}
+
+// SetNillableSpouseID sets the "spouse" edge to the User entity by ID if the given value is not nil.
+func (uuo *UserUpdateOne) SetNillableSpouseID(id *xid.ID) *UserUpdateOne {
+	if id != nil {
+		uuo = uuo.SetSpouseID(*id)
+	}
+	return uuo
+}
+
+// SetSpouse sets the "spouse" edge to the User entity.
+func (uuo *UserUpdateOne) SetSpouse(u *User) *UserUpdateOne {
+	return uuo.SetSpouseID(u.ID)
+}
+
+// SetPrevID sets the "prev" edge to the User entity by ID.
+func (uuo *UserUpdateOne) SetPrevID(id xid.ID) *UserUpdateOne {
+	uuo.mutation.SetPrevID(id)
+	return uuo
+}
+
+// SetNillablePrevID sets the "prev" edge to the User entity by ID if the given value is not nil.
+func (uuo *UserUpdateOne) SetNillablePrevID(id *xid.ID) *UserUpdateOne {
+	if id != nil {
+		uuo = uuo.SetPrevID(*id)
+	}
+	return uuo
+}
+
+// SetPrev sets the "prev" edge to the User entity.
+func (uuo *UserUpdateOne) SetPrev(u *User) *UserUpdateOne {
+	return uuo.SetPrevID(u.ID)
+}
+
+// SetNextID sets the "next" edge to the User entity by ID.
+func (uuo *UserUpdateOne) SetNextID(id xid.ID) *UserUpdateOne {
+	uuo.mutation.SetNextID(id)
+	return uuo
+}
+
+// SetNillableNextID sets the "next" edge to the User entity by ID if the given value is not nil.
+func (uuo *UserUpdateOne) SetNillableNextID(id *xid.ID) *UserUpdateOne {
+	if id != nil {
+		uuo = uuo.SetNextID(*id)
+	}
+	return uuo
+}
+
+// SetNext sets the "next" edge to the User entity.
+func (uuo *UserUpdateOne) SetNext(u *User) *UserUpdateOne {
+	return uuo.SetNextID(u.ID)
+}
+
+// AddPetIDs adds the "pets" edge to the Pet entity by IDs.
+func (uuo *UserUpdateOne) AddPetIDs(ids ...xid.ID) *UserUpdateOne {
+	uuo.mutation.AddPetIDs(ids...)
+	return uuo
+}
+
+// AddPets adds the "pets" edges to the Pet entity.
+func (uuo *UserUpdateOne) AddPets(p ...*Pet) *UserUpdateOne {
+	ids := make([]xid.ID, len(p))
+	for i := range p {
+		ids[i] = p[i].ID
+	}
+	return uuo.AddPetIDs(ids...)
+}
+
 // Mutation returns the UserMutation object of the builder.
 func (uuo *UserUpdateOne) Mutation() *UserMutation {
 	return uuo.mutation
+}
+
+// ClearSpouse clears the "spouse" edge to the User entity.
+func (uuo *UserUpdateOne) ClearSpouse() *UserUpdateOne {
+	uuo.mutation.ClearSpouse()
+	return uuo
+}
+
+// ClearPrev clears the "prev" edge to the User entity.
+func (uuo *UserUpdateOne) ClearPrev() *UserUpdateOne {
+	uuo.mutation.ClearPrev()
+	return uuo
+}
+
+// ClearNext clears the "next" edge to the User entity.
+func (uuo *UserUpdateOne) ClearNext() *UserUpdateOne {
+	uuo.mutation.ClearNext()
+	return uuo
+}
+
+// ClearPets clears all "pets" edges to the Pet entity.
+func (uuo *UserUpdateOne) ClearPets() *UserUpdateOne {
+	uuo.mutation.ClearPets()
+	return uuo
+}
+
+// RemovePetIDs removes the "pets" edge to Pet entities by IDs.
+func (uuo *UserUpdateOne) RemovePetIDs(ids ...xid.ID) *UserUpdateOne {
+	uuo.mutation.RemovePetIDs(ids...)
+	return uuo
+}
+
+// RemovePets removes "pets" edges to Pet entities.
+func (uuo *UserUpdateOne) RemovePets(p ...*Pet) *UserUpdateOne {
+	ids := make([]xid.ID, len(p))
+	for i := range p {
+		ids[i] = p[i].ID
+	}
+	return uuo.RemovePetIDs(ids...)
 }
 
 // Where appends a list predicates to the UserUpdate builder.
@@ -498,8 +915,17 @@ func (uuo *UserUpdateOne) sqlSave(ctx context.Context) (_node *User, err error) 
 	if uuo.mutation.UpdatedByCleared() {
 		_spec.ClearField(user.FieldUpdatedBy, field.TypeString)
 	}
+	if value, ok := uuo.mutation.IsDeleted(); ok {
+		_spec.SetField(user.FieldIsDeleted, field.TypeBool, value)
+	}
+	if uuo.mutation.IsDeletedCleared() {
+		_spec.ClearField(user.FieldIsDeleted, field.TypeBool)
+	}
 	if value, ok := uuo.mutation.DeletedAt(); ok {
 		_spec.SetField(user.FieldDeletedAt, field.TypeTime, value)
+	}
+	if uuo.mutation.DeletedAtCleared() {
+		_spec.ClearField(user.FieldDeletedAt, field.TypeTime)
 	}
 	if value, ok := uuo.mutation.DeletedBy(); ok {
 		_spec.SetField(user.FieldDeletedBy, field.TypeString, value)
@@ -515,6 +941,138 @@ func (uuo *UserUpdateOne) sqlSave(ctx context.Context) (_node *User, err error) 
 	}
 	if value, ok := uuo.mutation.Name(); ok {
 		_spec.SetField(user.FieldName, field.TypeString, value)
+	}
+	if uuo.mutation.SpouseCleared() {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.O2O,
+			Inverse: false,
+			Table:   user.SpouseTable,
+			Columns: []string{user.SpouseColumn},
+			Bidi:    true,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: sqlgraph.NewFieldSpec(user.FieldID, field.TypeString),
+			},
+		}
+		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
+	}
+	if nodes := uuo.mutation.SpouseIDs(); len(nodes) > 0 {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.O2O,
+			Inverse: false,
+			Table:   user.SpouseTable,
+			Columns: []string{user.SpouseColumn},
+			Bidi:    true,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: sqlgraph.NewFieldSpec(user.FieldID, field.TypeString),
+			},
+		}
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_spec.Edges.Add = append(_spec.Edges.Add, edge)
+	}
+	if uuo.mutation.PrevCleared() {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.O2O,
+			Inverse: true,
+			Table:   user.PrevTable,
+			Columns: []string{user.PrevColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: sqlgraph.NewFieldSpec(user.FieldID, field.TypeString),
+			},
+		}
+		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
+	}
+	if nodes := uuo.mutation.PrevIDs(); len(nodes) > 0 {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.O2O,
+			Inverse: true,
+			Table:   user.PrevTable,
+			Columns: []string{user.PrevColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: sqlgraph.NewFieldSpec(user.FieldID, field.TypeString),
+			},
+		}
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_spec.Edges.Add = append(_spec.Edges.Add, edge)
+	}
+	if uuo.mutation.NextCleared() {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.O2O,
+			Inverse: false,
+			Table:   user.NextTable,
+			Columns: []string{user.NextColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: sqlgraph.NewFieldSpec(user.FieldID, field.TypeString),
+			},
+		}
+		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
+	}
+	if nodes := uuo.mutation.NextIDs(); len(nodes) > 0 {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.O2O,
+			Inverse: false,
+			Table:   user.NextTable,
+			Columns: []string{user.NextColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: sqlgraph.NewFieldSpec(user.FieldID, field.TypeString),
+			},
+		}
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_spec.Edges.Add = append(_spec.Edges.Add, edge)
+	}
+	if uuo.mutation.PetsCleared() {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.O2M,
+			Inverse: false,
+			Table:   user.PetsTable,
+			Columns: []string{user.PetsColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: sqlgraph.NewFieldSpec(pet.FieldID, field.TypeString),
+			},
+		}
+		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
+	}
+	if nodes := uuo.mutation.RemovedPetsIDs(); len(nodes) > 0 && !uuo.mutation.PetsCleared() {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.O2M,
+			Inverse: false,
+			Table:   user.PetsTable,
+			Columns: []string{user.PetsColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: sqlgraph.NewFieldSpec(pet.FieldID, field.TypeString),
+			},
+		}
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
+	}
+	if nodes := uuo.mutation.PetsIDs(); len(nodes) > 0 {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.O2M,
+			Inverse: false,
+			Table:   user.PetsTable,
+			Columns: []string{user.PetsColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: sqlgraph.NewFieldSpec(pet.FieldID, field.TypeString),
+			},
+		}
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_spec.Edges.Add = append(_spec.Edges.Add, edge)
 	}
 	_node = &User{config: uuo.config}
 	_spec.Assign = _node.assignValues
