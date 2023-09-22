@@ -1,14 +1,12 @@
 package main
 
 import (
-	"ent-orm-test/test"
+	"ent-orm-test/ent/migrate"
 	"log"
 	"time"
 
-	"context"
 	"database/sql"
 	"ent-orm-test/ent"
-	"ent-orm-test/ent/migrate"
 	_ "ent-orm-test/ent/runtime"
 	entsql "entgo.io/ent/dialect/sql"
 	_ "github.com/go-sql-driver/mysql"
@@ -44,6 +42,4 @@ func main() {
 		log.Fatalf("failed creating schema resources: %v", err)
 	}
 
-	//CreateUser(context.Background(), client)
-	test.Do(context.Background(), client)
 }

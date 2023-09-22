@@ -41,9 +41,6 @@ func NewGoodsRPCServer(cfg *config.Config) (*rpcserver.Server, error) {
 	grpcServer := rpcserver.NewServer(rpcserver.WithAddress(rpcAddr))
 
 	gpb.RegisterGoodsServer(grpcServer.Server, goodsServer)
-
-	//r := gin.Default()
-	//upb.RegisterUserServerHTTPServer(userver, r)
-	//r.Run(":8075")
+	
 	return grpcServer, nil
 }

@@ -17,7 +17,7 @@ type PassWordLoginForm struct {
 func (us *userServer) Login(ctx *gin.Context) {
 	log.Info("login is called")
 
-	//表单验证
+	//NewUserService
 	passwordLoginForm := PassWordLoginForm{}
 	if err := ctx.ShouldBind(&passwordLoginForm); err != nil {
 		gin2.HandleValidatorError(ctx, err, us.trans)
