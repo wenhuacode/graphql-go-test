@@ -7,6 +7,9 @@ import (
 	"ent-three-layer/app/user/srv/internal/data/v1/do/ent/intercept"
 	"fmt"
 	"github.com/oklog/ulid/v2"
+	"log"
+	"os"
+	prand "pgregory.net/rand"
 	"time"
 
 	"entgo.io/ent"
@@ -14,7 +17,6 @@ import (
 	"entgo.io/ent/dialect/sql"
 	"entgo.io/ent/schema/field"
 	"entgo.io/ent/schema/mixin"
-	prand "pgregory.net/rand"
 )
 
 // BaseMixin to be shared will all different schemas.
@@ -101,8 +103,15 @@ func softDeleteHook(d BaseMixin) ent.Hook {
 }
 
 func IDHook() ent.Hook {
-	entropy := prand.New()
-	ms := ulid.Timestamp(time.Now())
+	// 获取当前机器ID，这里假设你从环境变量中获取机器ID
+	machineIDStr := os.Getenv("MACHINE_ID")
+	if machineIDStr == "" {
+		log.Fatalf("MACHINE_ID环境变量未设置")
+		return nil
+	}
+
+	entropy := ulid.Monotonic(prand.New(), 777)
+	id, _ := ulid.New(ulid.Timestamp(time.Now()), entropy)
 
 	type IDSetter interface {
 		SetID(string)
@@ -112,10 +121,6 @@ func IDHook() ent.Hook {
 			is, ok := m.(IDSetter)
 			if !ok {
 				return nil, fmt.Errorf("unexpected mutation %T", m)
-			}
-			id, err := ulid.New(ms, entropy)
-			if err != nil {
-				return nil, err
 			}
 			is.SetID(id.String())
 			return next.Mutate(ctx, m)
