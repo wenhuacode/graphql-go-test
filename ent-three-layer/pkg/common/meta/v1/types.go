@@ -6,3 +6,9 @@ type ListMeta struct {
 
 	PageSize int `json:"offset,omitempty" form:"offset"`
 }
+
+type OrderMeta struct {
+	Field string `json:"totalCount,omitempty"`
+
+	Order int `json:"offset,omitempty" form:"offset"`
+}

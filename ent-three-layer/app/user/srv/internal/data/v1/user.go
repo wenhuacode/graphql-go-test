@@ -13,7 +13,7 @@ type UserStore interface {
 		参数中最好有ctx
 	*/
 	// List 用户列表
-	List(ctx context.Context, orderby []string, opts v1.ListMeta) (*do.UserDOList, error)
+	List(ctx context.Context, orderby []v1.OrderMeta, opts v1.ListMeta) (*do.UserDOList, error)
 
 	// GetByMobile 通过手机号码查询用户
 	GetByMobile(ctx context.Context, mobile string) (*ent.User, error)

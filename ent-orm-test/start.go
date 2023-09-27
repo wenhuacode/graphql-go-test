@@ -1,6 +1,7 @@
-package main
+package start
 
 import (
+	"context"
 	"ent-orm-test/ent/migrate"
 	"log"
 	"time"
@@ -22,15 +23,9 @@ func Open() (*ent.Client, error) {
 	db.SetMaxOpenConns(100)
 	db.SetConnMaxLifetime(time.Hour)
 	drv := entsql.OpenDB("mysql", db)
-	return ent.NewClient(ent.Driver(drv)), nil
-}
 
-func main() {
-	client, err := Open()
-	if err != nil {
-		log.Fatalf("failed opening connection to mysql: %v", err)
-	}
-	defer client.Close()
+	client := ent.NewClient(ent.Driver(drv))
+
 	ctx := context.Background()
 	//Run the auto migration tool.
 	if err := client.Debug().Schema.Create(
@@ -41,5 +36,6 @@ func main() {
 	); err != nil {
 		log.Fatalf("failed creating schema resources: %v", err)
 	}
+	return client, nil
 
 }

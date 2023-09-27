@@ -1,8 +1,8 @@
 package schema
 
 import (
+	"ent-orm-test/ent/base"
 	"entgo.io/ent"
-	"entgo.io/ent/schema/edge"
 	"entgo.io/ent/schema/field"
 )
 
@@ -15,30 +15,35 @@ type User struct {
 func (User) Mixin() []ent.Mixin {
 	return []ent.Mixin{
 		// Embed the BaseMixin in the user schema.
-		BaseMixin{},
+		base.BaseMixin{},
 	}
 }
 
 // Fields of the User.
 func (User) Fields() []ent.Field {
 	return []ent.Field{
-		field.Int("age").
-			Positive(),
-		field.String("name").
-			Default("unknown"),
+		field.String("mobile").
+			Unique().
+			Comment("手机号"),
+		field.String("password").
+			NotEmpty().
+			Comment("密码"),
+		field.String("nickname").
+			Optional().
+			Comment("昵称"),
+		field.Time("birthday").
+			Optional().
+			Comment("生日"),
+		field.String("gender").
+			Default("male").
+			Comment("性别"),
+		field.Int("role").
+			Default(1).
+			Comment("角色"),
 	}
 }
 
 // Edges of the User.
 func (User) Edges() []ent.Edge {
-	return []ent.Edge{
-		edge.To("spouse", User.Type).
-			Unique().
-			Comment("配偶"),
-		edge.To("next", User.Type).
-			Unique().
-			From("prev").
-			Unique().Comment("同类型-递归"),
-		edge.To("pets", Pet.Type),
-	}
+	return nil
 }

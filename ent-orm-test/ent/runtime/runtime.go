@@ -3,7 +3,6 @@
 package runtime
 
 import (
-	"ent-orm-test/ent/pet"
 	"ent-orm-test/ent/schema"
 	"ent-orm-test/ent/user"
 	"time"
@@ -15,34 +14,10 @@ import (
 // (default values, validators, hooks and policies) and stitches it
 // to their package variables.
 func init() {
-	petMixin := schema.Pet{}.Mixin()
-	petMixinHooks0 := petMixin[0].Hooks()
-	pet.Hooks[0] = petMixinHooks0[0]
-	petMixinInters0 := petMixin[0].Interceptors()
-	pet.Interceptors[0] = petMixinInters0[0]
-	petMixinFields0 := petMixin[0].Fields()
-	_ = petMixinFields0
-	petFields := schema.Pet{}.Fields()
-	_ = petFields
-	// petDescCreatedAt is the schema descriptor for created_at field.
-	petDescCreatedAt := petMixinFields0[1].Descriptor()
-	// pet.DefaultCreatedAt holds the default value on creation for the created_at field.
-	pet.DefaultCreatedAt = petDescCreatedAt.Default.(func() time.Time)
-	// petDescUpdatedAt is the schema descriptor for updated_at field.
-	petDescUpdatedAt := petMixinFields0[3].Descriptor()
-	// pet.DefaultUpdatedAt holds the default value on creation for the updated_at field.
-	pet.DefaultUpdatedAt = petDescUpdatedAt.Default.(func() time.Time)
-	// petDescName is the schema descriptor for name field.
-	petDescName := petFields[0].Descriptor()
-	// pet.DefaultName holds the default value on creation for the name field.
-	pet.DefaultName = petDescName.Default.(string)
-	// petDescID is the schema descriptor for id field.
-	petDescID := petMixinFields0[0].Descriptor()
-	// pet.DefaultID holds the default value on creation for the id field.
-	pet.DefaultID = petDescID.Default.(func() xid.ID)
 	userMixin := schema.User{}.Mixin()
 	userMixinHooks0 := userMixin[0].Hooks()
 	user.Hooks[0] = userMixinHooks0[0]
+	user.Hooks[1] = userMixinHooks0[1]
 	userMixinInters0 := userMixin[0].Interceptors()
 	user.Interceptors[0] = userMixinInters0[0]
 	userMixinFields0 := userMixin[0].Fields()
@@ -55,16 +30,20 @@ func init() {
 	user.DefaultCreatedAt = userDescCreatedAt.Default.(func() time.Time)
 	// userDescUpdatedAt is the schema descriptor for updated_at field.
 	userDescUpdatedAt := userMixinFields0[3].Descriptor()
-	// user.DefaultUpdatedAt holds the default value on creation for the updated_at field.
-	user.DefaultUpdatedAt = userDescUpdatedAt.Default.(func() time.Time)
-	// userDescAge is the schema descriptor for age field.
-	userDescAge := userFields[0].Descriptor()
-	// user.AgeValidator is a validator for the "age" field. It is called by the builders before save.
-	user.AgeValidator = userDescAge.Validators[0].(func(int) error)
-	// userDescName is the schema descriptor for name field.
-	userDescName := userFields[1].Descriptor()
-	// user.DefaultName holds the default value on creation for the name field.
-	user.DefaultName = userDescName.Default.(string)
+	// user.UpdateDefaultUpdatedAt holds the default value on update for the updated_at field.
+	user.UpdateDefaultUpdatedAt = userDescUpdatedAt.UpdateDefault.(func() time.Time)
+	// userDescPassword is the schema descriptor for password field.
+	userDescPassword := userFields[1].Descriptor()
+	// user.PasswordValidator is a validator for the "password" field. It is called by the builders before save.
+	user.PasswordValidator = userDescPassword.Validators[0].(func(string) error)
+	// userDescGender is the schema descriptor for gender field.
+	userDescGender := userFields[4].Descriptor()
+	// user.DefaultGender holds the default value on creation for the gender field.
+	user.DefaultGender = userDescGender.Default.(string)
+	// userDescRole is the schema descriptor for role field.
+	userDescRole := userFields[5].Descriptor()
+	// user.DefaultRole holds the default value on creation for the role field.
+	user.DefaultRole = userDescRole.Default.(int)
 	// userDescID is the schema descriptor for id field.
 	userDescID := userMixinFields0[0].Descriptor()
 	// user.DefaultID holds the default value on creation for the id field.

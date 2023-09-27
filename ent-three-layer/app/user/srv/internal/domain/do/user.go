@@ -8,11 +8,11 @@ type UserDO struct {
 	ent.User
 }
 
-func (UserDO) TableName() string {
-	return "user"
-}
-
 type UserDOList struct {
 	TotalCount int64     `json:"totalCount,omitempty"`
 	Items      []*UserDO `json:"items"`
+}
+
+func (UserDO) TableName() string {
+	return "user"
 }

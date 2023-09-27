@@ -26,6 +26,17 @@ message CheckResponse{
 message PageInfo {
     uint32 pn = 1;
     uint32 pSize = 2;
+    repeated SortOrder sort = 3;
+}
+
+message SortOrder {
+    enum Direction {
+        ASC = 0; // 升序
+        DESC = 1; // 降序
+    }
+
+    string field = 1;    // 排序字段的名称
+    Direction order = 2; // 排序顺序
 }
 
 message MobileRequest{

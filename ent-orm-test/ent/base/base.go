@@ -1,20 +1,19 @@
-package schema
+package base
 
 import (
 	"context"
-	gen "ent-orm-test/ent"
 	"ent-orm-test/ent/hook"
 	"ent-orm-test/ent/intercept"
 	"fmt"
+	"github.com/rs/xid"
 	"time"
 
+	gen "ent-orm-test/ent"
 	"entgo.io/ent"
 	"entgo.io/ent/dialect"
 	"entgo.io/ent/dialect/sql"
 	"entgo.io/ent/schema/field"
 	"entgo.io/ent/schema/mixin"
-
-	"github.com/rs/xid"
 )
 
 // BaseMixin to be shared will all different schemas.
@@ -30,35 +29,26 @@ func (BaseMixin) Fields() []ent.Field {
 			DefaultFunc(xid.New),
 		field.Time("created_at").
 			SchemaType(map[string]string{dialect.MySQL: "datetime"}).
-			Default(func() time.Time { return time.Now() }).
-			Comment("创建时间").
-			StructTag(`gqlgen:"created_at"`),
+			Default(time.Now).
+			Comment("创建时间"),
 		field.String("created_by").
 			Optional().
-			Comment("创建人").
-			StructTag(`gqlgen:"created_by"`),
+			Comment("创建人"),
 		field.Time("updated_at").
 			SchemaType(map[string]string{dialect.MySQL: "datetime"}).
-			Default(func() time.Time { return time.Now() }).
-			Comment("更新时间").
-			StructTag(`gqlgen:"updated_at"`),
+			Optional().
+			UpdateDefault(time.Now).
+			Comment("更新时间"),
 		field.String("updated_by").
 			Optional().
-			Comment("更新人").
-			StructTag(`gqlgen:"updated_by"`),
-		field.Bool("is_deleted").
-			Optional().
-			Comment("是否删除").
-			StructTag(`gqlgen:"is_deleted"`),
+			Comment("更新人"),
 		field.Time("deleted_at").
 			Optional().
 			SchemaType(map[string]string{dialect.MySQL: "datetime"}).
-			Comment("删除时间").
-			StructTag(`gqlgen:"deleted_at"`),
+			Comment("删除时间"),
 		field.String("deleted_by").
 			Optional().
-			Comment("删除人").
-			StructTag(`gqlgen:"deleted_by"`),
+			Comment("删除人"),
 	}
 }
 
@@ -90,11 +80,12 @@ func softDeleteHook(d BaseMixin) ent.Hook {
 			if skip, _ := ctx.Value(softDeleteKey{}).(bool); skip {
 				return next.Mutate(ctx, m)
 			}
+			userID := "test12"
 			mx, ok := m.(interface {
 				SetOp(ent.Op)
 				Client() *gen.Client
-				SetIsDeleted(bool)
 				SetDeletedAt(time.Time)
+				SetDeletedBy(string)
 				WhereP(...func(*sql.Selector))
 			})
 			if !ok {
@@ -102,16 +93,56 @@ func softDeleteHook(d BaseMixin) ent.Hook {
 			}
 			d.P(mx)
 			mx.SetOp(ent.OpUpdate)
-			mx.SetIsDeleted(true)
 			mx.SetDeletedAt(time.Now())
+			mx.SetDeletedBy(userID)
 			return mx.Client().Mutate(ctx, m)
 		})
 	}
 }
 
+// A AuditHook is an example for audit-log hook. 安全删除
+func AuditHook(next ent.Mutator) ent.Mutator {
+	// AuditLogger wraps the methods that are shared between all mutations of
+	// schemas that embed the AuditLog mixin. The variable "exists" is true, if
+	// the field already exists in the mutation (e.g. was set by a different hook).
+	type AuditLogger interface {
+		SetCreatedAt(time.Time)
+		CreatedAt() (value time.Time, exists bool)
+		SetCreatedBy(string)
+		CreatedBy() (id string, exists bool)
+		SetUpdatedAt(time.Time)
+		UpdatedAt() (value time.Time, exists bool)
+		SetUpdatedBy(string)
+		UpdatedBy() (id string, exists bool)
+	}
+	return ent.MutateFunc(func(ctx context.Context, m ent.Mutation) (ent.Value, error) {
+		ml, ok := m.(AuditLogger)
+		if !ok {
+			return nil, fmt.Errorf("unexpected audit-log call from mutation type %T", m)
+		}
+		//获取用户id
+		userID := "test12"
+
+		switch op := m.Op(); {
+		case op.Is(ent.OpCreate):
+			ml.SetCreatedAt(time.Now())
+			if _, exists := ml.CreatedBy(); !exists {
+				ml.SetCreatedBy(userID)
+			}
+		case op.Is(ent.OpUpdateOne | ent.OpUpdate):
+			ml.SetUpdatedAt(time.Now())
+			if _, exists := ml.UpdatedBy(); !exists {
+				ml.SetUpdatedBy(userID)
+			}
+		}
+		return next.Mutate(ctx, m)
+	})
+}
+
 // Hooks of the SoftDeleteMixin.
 func (d BaseMixin) Hooks() []ent.Hook {
 	return []ent.Hook{
+		AuditHook,
 		hook.On(softDeleteHook(d), ent.OpDeleteOne|ent.OpDelete),
 	}
 }

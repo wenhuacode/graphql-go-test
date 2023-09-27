@@ -4,7 +4,6 @@ package ent
 
 import (
 	"context"
-	"ent-orm-test/ent/pet"
 	"ent-orm-test/ent/user"
 	"errors"
 	"fmt"
@@ -78,20 +77,6 @@ func (uc *UserCreate) SetNillableUpdatedBy(s *string) *UserCreate {
 	return uc
 }
 
-// SetIsDeleted sets the "is_deleted" field.
-func (uc *UserCreate) SetIsDeleted(b bool) *UserCreate {
-	uc.mutation.SetIsDeleted(b)
-	return uc
-}
-
-// SetNillableIsDeleted sets the "is_deleted" field if the given value is not nil.
-func (uc *UserCreate) SetNillableIsDeleted(b *bool) *UserCreate {
-	if b != nil {
-		uc.SetIsDeleted(*b)
-	}
-	return uc
-}
-
 // SetDeletedAt sets the "deleted_at" field.
 func (uc *UserCreate) SetDeletedAt(t time.Time) *UserCreate {
 	uc.mutation.SetDeletedAt(t)
@@ -120,22 +105,70 @@ func (uc *UserCreate) SetNillableDeletedBy(s *string) *UserCreate {
 	return uc
 }
 
-// SetAge sets the "age" field.
-func (uc *UserCreate) SetAge(i int) *UserCreate {
-	uc.mutation.SetAge(i)
+// SetMobile sets the "mobile" field.
+func (uc *UserCreate) SetMobile(s string) *UserCreate {
+	uc.mutation.SetMobile(s)
 	return uc
 }
 
-// SetName sets the "name" field.
-func (uc *UserCreate) SetName(s string) *UserCreate {
-	uc.mutation.SetName(s)
+// SetPassword sets the "password" field.
+func (uc *UserCreate) SetPassword(s string) *UserCreate {
+	uc.mutation.SetPassword(s)
 	return uc
 }
 
-// SetNillableName sets the "name" field if the given value is not nil.
-func (uc *UserCreate) SetNillableName(s *string) *UserCreate {
+// SetNickname sets the "nickname" field.
+func (uc *UserCreate) SetNickname(s string) *UserCreate {
+	uc.mutation.SetNickname(s)
+	return uc
+}
+
+// SetNillableNickname sets the "nickname" field if the given value is not nil.
+func (uc *UserCreate) SetNillableNickname(s *string) *UserCreate {
 	if s != nil {
-		uc.SetName(*s)
+		uc.SetNickname(*s)
+	}
+	return uc
+}
+
+// SetBirthday sets the "birthday" field.
+func (uc *UserCreate) SetBirthday(t time.Time) *UserCreate {
+	uc.mutation.SetBirthday(t)
+	return uc
+}
+
+// SetNillableBirthday sets the "birthday" field if the given value is not nil.
+func (uc *UserCreate) SetNillableBirthday(t *time.Time) *UserCreate {
+	if t != nil {
+		uc.SetBirthday(*t)
+	}
+	return uc
+}
+
+// SetGender sets the "gender" field.
+func (uc *UserCreate) SetGender(s string) *UserCreate {
+	uc.mutation.SetGender(s)
+	return uc
+}
+
+// SetNillableGender sets the "gender" field if the given value is not nil.
+func (uc *UserCreate) SetNillableGender(s *string) *UserCreate {
+	if s != nil {
+		uc.SetGender(*s)
+	}
+	return uc
+}
+
+// SetRole sets the "role" field.
+func (uc *UserCreate) SetRole(i int) *UserCreate {
+	uc.mutation.SetRole(i)
+	return uc
+}
+
+// SetNillableRole sets the "role" field if the given value is not nil.
+func (uc *UserCreate) SetNillableRole(i *int) *UserCreate {
+	if i != nil {
+		uc.SetRole(*i)
 	}
 	return uc
 }
@@ -152,78 +185,6 @@ func (uc *UserCreate) SetNillableID(x *xid.ID) *UserCreate {
 		uc.SetID(*x)
 	}
 	return uc
-}
-
-// SetSpouseID sets the "spouse" edge to the User entity by ID.
-func (uc *UserCreate) SetSpouseID(id xid.ID) *UserCreate {
-	uc.mutation.SetSpouseID(id)
-	return uc
-}
-
-// SetNillableSpouseID sets the "spouse" edge to the User entity by ID if the given value is not nil.
-func (uc *UserCreate) SetNillableSpouseID(id *xid.ID) *UserCreate {
-	if id != nil {
-		uc = uc.SetSpouseID(*id)
-	}
-	return uc
-}
-
-// SetSpouse sets the "spouse" edge to the User entity.
-func (uc *UserCreate) SetSpouse(u *User) *UserCreate {
-	return uc.SetSpouseID(u.ID)
-}
-
-// SetPrevID sets the "prev" edge to the User entity by ID.
-func (uc *UserCreate) SetPrevID(id xid.ID) *UserCreate {
-	uc.mutation.SetPrevID(id)
-	return uc
-}
-
-// SetNillablePrevID sets the "prev" edge to the User entity by ID if the given value is not nil.
-func (uc *UserCreate) SetNillablePrevID(id *xid.ID) *UserCreate {
-	if id != nil {
-		uc = uc.SetPrevID(*id)
-	}
-	return uc
-}
-
-// SetPrev sets the "prev" edge to the User entity.
-func (uc *UserCreate) SetPrev(u *User) *UserCreate {
-	return uc.SetPrevID(u.ID)
-}
-
-// SetNextID sets the "next" edge to the User entity by ID.
-func (uc *UserCreate) SetNextID(id xid.ID) *UserCreate {
-	uc.mutation.SetNextID(id)
-	return uc
-}
-
-// SetNillableNextID sets the "next" edge to the User entity by ID if the given value is not nil.
-func (uc *UserCreate) SetNillableNextID(id *xid.ID) *UserCreate {
-	if id != nil {
-		uc = uc.SetNextID(*id)
-	}
-	return uc
-}
-
-// SetNext sets the "next" edge to the User entity.
-func (uc *UserCreate) SetNext(u *User) *UserCreate {
-	return uc.SetNextID(u.ID)
-}
-
-// AddPetIDs adds the "pets" edge to the Pet entity by IDs.
-func (uc *UserCreate) AddPetIDs(ids ...xid.ID) *UserCreate {
-	uc.mutation.AddPetIDs(ids...)
-	return uc
-}
-
-// AddPets adds the "pets" edges to the Pet entity.
-func (uc *UserCreate) AddPets(p ...*Pet) *UserCreate {
-	ids := make([]xid.ID, len(p))
-	for i := range p {
-		ids[i] = p[i].ID
-	}
-	return uc.AddPetIDs(ids...)
 }
 
 // Mutation returns the UserMutation object of the builder.
@@ -270,16 +231,13 @@ func (uc *UserCreate) defaults() error {
 		v := user.DefaultCreatedAt()
 		uc.mutation.SetCreatedAt(v)
 	}
-	if _, ok := uc.mutation.UpdatedAt(); !ok {
-		if user.DefaultUpdatedAt == nil {
-			return fmt.Errorf("ent: uninitialized user.DefaultUpdatedAt (forgotten import ent/runtime?)")
-		}
-		v := user.DefaultUpdatedAt()
-		uc.mutation.SetUpdatedAt(v)
+	if _, ok := uc.mutation.Gender(); !ok {
+		v := user.DefaultGender
+		uc.mutation.SetGender(v)
 	}
-	if _, ok := uc.mutation.Name(); !ok {
-		v := user.DefaultName
-		uc.mutation.SetName(v)
+	if _, ok := uc.mutation.Role(); !ok {
+		v := user.DefaultRole
+		uc.mutation.SetRole(v)
 	}
 	if _, ok := uc.mutation.ID(); !ok {
 		if user.DefaultID == nil {
@@ -296,19 +254,22 @@ func (uc *UserCreate) check() error {
 	if _, ok := uc.mutation.CreatedAt(); !ok {
 		return &ValidationError{Name: "created_at", err: errors.New(`ent: missing required field "User.created_at"`)}
 	}
-	if _, ok := uc.mutation.UpdatedAt(); !ok {
-		return &ValidationError{Name: "updated_at", err: errors.New(`ent: missing required field "User.updated_at"`)}
+	if _, ok := uc.mutation.Mobile(); !ok {
+		return &ValidationError{Name: "mobile", err: errors.New(`ent: missing required field "User.mobile"`)}
 	}
-	if _, ok := uc.mutation.Age(); !ok {
-		return &ValidationError{Name: "age", err: errors.New(`ent: missing required field "User.age"`)}
+	if _, ok := uc.mutation.Password(); !ok {
+		return &ValidationError{Name: "password", err: errors.New(`ent: missing required field "User.password"`)}
 	}
-	if v, ok := uc.mutation.Age(); ok {
-		if err := user.AgeValidator(v); err != nil {
-			return &ValidationError{Name: "age", err: fmt.Errorf(`ent: validator failed for field "User.age": %w`, err)}
+	if v, ok := uc.mutation.Password(); ok {
+		if err := user.PasswordValidator(v); err != nil {
+			return &ValidationError{Name: "password", err: fmt.Errorf(`ent: validator failed for field "User.password": %w`, err)}
 		}
 	}
-	if _, ok := uc.mutation.Name(); !ok {
-		return &ValidationError{Name: "name", err: errors.New(`ent: missing required field "User.name"`)}
+	if _, ok := uc.mutation.Gender(); !ok {
+		return &ValidationError{Name: "gender", err: errors.New(`ent: missing required field "User.gender"`)}
+	}
+	if _, ok := uc.mutation.Role(); !ok {
+		return &ValidationError{Name: "role", err: errors.New(`ent: missing required field "User.role"`)}
 	}
 	return nil
 }
@@ -361,10 +322,6 @@ func (uc *UserCreate) createSpec() (*User, *sqlgraph.CreateSpec) {
 		_spec.SetField(user.FieldUpdatedBy, field.TypeString, value)
 		_node.UpdatedBy = value
 	}
-	if value, ok := uc.mutation.IsDeleted(); ok {
-		_spec.SetField(user.FieldIsDeleted, field.TypeBool, value)
-		_node.IsDeleted = value
-	}
 	if value, ok := uc.mutation.DeletedAt(); ok {
 		_spec.SetField(user.FieldDeletedAt, field.TypeTime, value)
 		_node.DeletedAt = value
@@ -373,79 +330,29 @@ func (uc *UserCreate) createSpec() (*User, *sqlgraph.CreateSpec) {
 		_spec.SetField(user.FieldDeletedBy, field.TypeString, value)
 		_node.DeletedBy = value
 	}
-	if value, ok := uc.mutation.Age(); ok {
-		_spec.SetField(user.FieldAge, field.TypeInt, value)
-		_node.Age = value
+	if value, ok := uc.mutation.Mobile(); ok {
+		_spec.SetField(user.FieldMobile, field.TypeString, value)
+		_node.Mobile = value
 	}
-	if value, ok := uc.mutation.Name(); ok {
-		_spec.SetField(user.FieldName, field.TypeString, value)
-		_node.Name = value
+	if value, ok := uc.mutation.Password(); ok {
+		_spec.SetField(user.FieldPassword, field.TypeString, value)
+		_node.Password = value
 	}
-	if nodes := uc.mutation.SpouseIDs(); len(nodes) > 0 {
-		edge := &sqlgraph.EdgeSpec{
-			Rel:     sqlgraph.O2O,
-			Inverse: false,
-			Table:   user.SpouseTable,
-			Columns: []string{user.SpouseColumn},
-			Bidi:    true,
-			Target: &sqlgraph.EdgeTarget{
-				IDSpec: sqlgraph.NewFieldSpec(user.FieldID, field.TypeString),
-			},
-		}
-		for _, k := range nodes {
-			edge.Target.Nodes = append(edge.Target.Nodes, k)
-		}
-		_node.user_spouse = &nodes[0]
-		_spec.Edges = append(_spec.Edges, edge)
+	if value, ok := uc.mutation.Nickname(); ok {
+		_spec.SetField(user.FieldNickname, field.TypeString, value)
+		_node.Nickname = value
 	}
-	if nodes := uc.mutation.PrevIDs(); len(nodes) > 0 {
-		edge := &sqlgraph.EdgeSpec{
-			Rel:     sqlgraph.O2O,
-			Inverse: true,
-			Table:   user.PrevTable,
-			Columns: []string{user.PrevColumn},
-			Bidi:    false,
-			Target: &sqlgraph.EdgeTarget{
-				IDSpec: sqlgraph.NewFieldSpec(user.FieldID, field.TypeString),
-			},
-		}
-		for _, k := range nodes {
-			edge.Target.Nodes = append(edge.Target.Nodes, k)
-		}
-		_node.user_next = &nodes[0]
-		_spec.Edges = append(_spec.Edges, edge)
+	if value, ok := uc.mutation.Birthday(); ok {
+		_spec.SetField(user.FieldBirthday, field.TypeTime, value)
+		_node.Birthday = value
 	}
-	if nodes := uc.mutation.NextIDs(); len(nodes) > 0 {
-		edge := &sqlgraph.EdgeSpec{
-			Rel:     sqlgraph.O2O,
-			Inverse: false,
-			Table:   user.NextTable,
-			Columns: []string{user.NextColumn},
-			Bidi:    false,
-			Target: &sqlgraph.EdgeTarget{
-				IDSpec: sqlgraph.NewFieldSpec(user.FieldID, field.TypeString),
-			},
-		}
-		for _, k := range nodes {
-			edge.Target.Nodes = append(edge.Target.Nodes, k)
-		}
-		_spec.Edges = append(_spec.Edges, edge)
+	if value, ok := uc.mutation.Gender(); ok {
+		_spec.SetField(user.FieldGender, field.TypeString, value)
+		_node.Gender = value
 	}
-	if nodes := uc.mutation.PetsIDs(); len(nodes) > 0 {
-		edge := &sqlgraph.EdgeSpec{
-			Rel:     sqlgraph.O2M,
-			Inverse: false,
-			Table:   user.PetsTable,
-			Columns: []string{user.PetsColumn},
-			Bidi:    false,
-			Target: &sqlgraph.EdgeTarget{
-				IDSpec: sqlgraph.NewFieldSpec(pet.FieldID, field.TypeString),
-			},
-		}
-		for _, k := range nodes {
-			edge.Target.Nodes = append(edge.Target.Nodes, k)
-		}
-		_spec.Edges = append(_spec.Edges, edge)
+	if value, ok := uc.mutation.Role(); ok {
+		_spec.SetField(user.FieldRole, field.TypeInt, value)
+		_node.Role = value
 	}
 	return _node, _spec
 }

@@ -3,7 +3,6 @@ package schema
 import (
 	"ent-three-layer/app/user/srv/internal/data/v1/ent/base"
 	"entgo.io/ent"
-	"entgo.io/ent/schema"
 	"entgo.io/ent/schema/field"
 )
 
@@ -42,10 +41,6 @@ func (User) Fields() []ent.Field {
 			Default(1).
 			Comment("角色"),
 	}
-}
-
-func (User) Annotations() []schema.Annotation {
-	return []schema.Annotation{}
 }
 
 // Edges of the User.

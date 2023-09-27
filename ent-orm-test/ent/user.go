@@ -15,96 +15,34 @@ import (
 
 // User is the model entity for the User schema.
 type User struct {
-	config `gqlgen:"-" json:"-"`
+	config `json:"-"`
 	// ID of the ent.
 	ID xid.ID `json:"id,omitempty"`
 	// 创建时间
-	CreatedAt time.Time `json:"created_at,omitempty" gqlgen:"created_at"`
+	CreatedAt time.Time `json:"created_at,omitempty"`
 	// 创建人
-	CreatedBy string `json:"created_by,omitempty" gqlgen:"created_by"`
+	CreatedBy string `json:"created_by,omitempty"`
 	// 更新时间
-	UpdatedAt time.Time `json:"updated_at,omitempty" gqlgen:"updated_at"`
+	UpdatedAt time.Time `json:"updated_at,omitempty"`
 	// 更新人
-	UpdatedBy string `json:"updated_by,omitempty" gqlgen:"updated_by"`
-	// 是否删除
-	IsDeleted bool `json:"is_deleted,omitempty" gqlgen:"is_deleted"`
+	UpdatedBy string `json:"updated_by,omitempty"`
 	// 删除时间
-	DeletedAt time.Time `json:"deleted_at,omitempty" gqlgen:"deleted_at"`
+	DeletedAt time.Time `json:"deleted_at,omitempty"`
 	// 删除人
-	DeletedBy string `json:"deleted_by,omitempty" gqlgen:"deleted_by"`
-	// Age holds the value of the "age" field.
-	Age int `json:"age,omitempty"`
-	// Name holds the value of the "name" field.
-	Name string `json:"name,omitempty"`
-	// Edges holds the relations/edges for other nodes in the graph.
-	// The values are being populated by the UserQuery when eager-loading is set.
-	Edges        UserEdges `json:"edges"`
-	user_spouse  *xid.ID
-	user_next    *xid.ID
+	DeletedBy string `json:"deleted_by,omitempty"`
+	// 手机号
+	Mobile string `json:"mobile,omitempty"`
+	// 密码
+	Password string `json:"password,omitempty"`
+	// 昵称
+	Nickname string `json:"nickname,omitempty"`
+	// 生日
+	Birthday time.Time `json:"birthday,omitempty"`
+	// 性别
+	Gender string `json:"gender,omitempty"`
+	// 角色
+	Role         int `json:"role,omitempty"`
 	selectValues sql.SelectValues
-}
-
-// UserEdges holds the relations/edges for other nodes in the graph.
-type UserEdges struct {
-	// 配偶
-	Spouse *User `json:"spouse,omitempty"`
-	// 同类型-递归
-	Prev *User `json:"prev,omitempty"`
-	// Next holds the value of the next edge.
-	Next *User `json:"next,omitempty"`
-	// Pets holds the value of the pets edge.
-	Pets []*Pet `json:"pets,omitempty"`
-	// loadedTypes holds the information for reporting if a
-	// type was loaded (or requested) in eager-loading or not.
-	loadedTypes [4]bool
-}
-
-// SpouseOrErr returns the Spouse value or an error if the edge
-// was not loaded in eager-loading, or loaded but was not found.
-func (e UserEdges) SpouseOrErr() (*User, error) {
-	if e.loadedTypes[0] {
-		if e.Spouse == nil {
-			// Edge was loaded but was not found.
-			return nil, &NotFoundError{label: user.Label}
-		}
-		return e.Spouse, nil
-	}
-	return nil, &NotLoadedError{edge: "spouse"}
-}
-
-// PrevOrErr returns the Prev value or an error if the edge
-// was not loaded in eager-loading, or loaded but was not found.
-func (e UserEdges) PrevOrErr() (*User, error) {
-	if e.loadedTypes[1] {
-		if e.Prev == nil {
-			// Edge was loaded but was not found.
-			return nil, &NotFoundError{label: user.Label}
-		}
-		return e.Prev, nil
-	}
-	return nil, &NotLoadedError{edge: "prev"}
-}
-
-// NextOrErr returns the Next value or an error if the edge
-// was not loaded in eager-loading, or loaded but was not found.
-func (e UserEdges) NextOrErr() (*User, error) {
-	if e.loadedTypes[2] {
-		if e.Next == nil {
-			// Edge was loaded but was not found.
-			return nil, &NotFoundError{label: user.Label}
-		}
-		return e.Next, nil
-	}
-	return nil, &NotLoadedError{edge: "next"}
-}
-
-// PetsOrErr returns the Pets value or an error if the edge
-// was not loaded in eager-loading.
-func (e UserEdges) PetsOrErr() ([]*Pet, error) {
-	if e.loadedTypes[3] {
-		return e.Pets, nil
-	}
-	return nil, &NotLoadedError{edge: "pets"}
 }
 
 // scanValues returns the types for scanning values from sql.Rows.
@@ -112,20 +50,14 @@ func (*User) scanValues(columns []string) ([]any, error) {
 	values := make([]any, len(columns))
 	for i := range columns {
 		switch columns[i] {
-		case user.FieldIsDeleted:
-			values[i] = new(sql.NullBool)
-		case user.FieldAge:
+		case user.FieldRole:
 			values[i] = new(sql.NullInt64)
-		case user.FieldCreatedBy, user.FieldUpdatedBy, user.FieldDeletedBy, user.FieldName:
+		case user.FieldCreatedBy, user.FieldUpdatedBy, user.FieldDeletedBy, user.FieldMobile, user.FieldPassword, user.FieldNickname, user.FieldGender:
 			values[i] = new(sql.NullString)
-		case user.FieldCreatedAt, user.FieldUpdatedAt, user.FieldDeletedAt:
+		case user.FieldCreatedAt, user.FieldUpdatedAt, user.FieldDeletedAt, user.FieldBirthday:
 			values[i] = new(sql.NullTime)
 		case user.FieldID:
 			values[i] = new(xid.ID)
-		case user.ForeignKeys[0]: // user_spouse
-			values[i] = &sql.NullScanner{S: new(xid.ID)}
-		case user.ForeignKeys[1]: // user_next
-			values[i] = &sql.NullScanner{S: new(xid.ID)}
 		default:
 			values[i] = new(sql.UnknownType)
 		}
@@ -171,12 +103,6 @@ func (u *User) assignValues(columns []string, values []any) error {
 			} else if value.Valid {
 				u.UpdatedBy = value.String
 			}
-		case user.FieldIsDeleted:
-			if value, ok := values[i].(*sql.NullBool); !ok {
-				return fmt.Errorf("unexpected type %T for field is_deleted", values[i])
-			} else if value.Valid {
-				u.IsDeleted = value.Bool
-			}
 		case user.FieldDeletedAt:
 			if value, ok := values[i].(*sql.NullTime); !ok {
 				return fmt.Errorf("unexpected type %T for field deleted_at", values[i])
@@ -189,31 +115,41 @@ func (u *User) assignValues(columns []string, values []any) error {
 			} else if value.Valid {
 				u.DeletedBy = value.String
 			}
-		case user.FieldAge:
-			if value, ok := values[i].(*sql.NullInt64); !ok {
-				return fmt.Errorf("unexpected type %T for field age", values[i])
-			} else if value.Valid {
-				u.Age = int(value.Int64)
-			}
-		case user.FieldName:
+		case user.FieldMobile:
 			if value, ok := values[i].(*sql.NullString); !ok {
-				return fmt.Errorf("unexpected type %T for field name", values[i])
+				return fmt.Errorf("unexpected type %T for field mobile", values[i])
 			} else if value.Valid {
-				u.Name = value.String
+				u.Mobile = value.String
 			}
-		case user.ForeignKeys[0]:
-			if value, ok := values[i].(*sql.NullScanner); !ok {
-				return fmt.Errorf("unexpected type %T for field user_spouse", values[i])
+		case user.FieldPassword:
+			if value, ok := values[i].(*sql.NullString); !ok {
+				return fmt.Errorf("unexpected type %T for field password", values[i])
 			} else if value.Valid {
-				u.user_spouse = new(xid.ID)
-				*u.user_spouse = *value.S.(*xid.ID)
+				u.Password = value.String
 			}
-		case user.ForeignKeys[1]:
-			if value, ok := values[i].(*sql.NullScanner); !ok {
-				return fmt.Errorf("unexpected type %T for field user_next", values[i])
+		case user.FieldNickname:
+			if value, ok := values[i].(*sql.NullString); !ok {
+				return fmt.Errorf("unexpected type %T for field nickname", values[i])
 			} else if value.Valid {
-				u.user_next = new(xid.ID)
-				*u.user_next = *value.S.(*xid.ID)
+				u.Nickname = value.String
+			}
+		case user.FieldBirthday:
+			if value, ok := values[i].(*sql.NullTime); !ok {
+				return fmt.Errorf("unexpected type %T for field birthday", values[i])
+			} else if value.Valid {
+				u.Birthday = value.Time
+			}
+		case user.FieldGender:
+			if value, ok := values[i].(*sql.NullString); !ok {
+				return fmt.Errorf("unexpected type %T for field gender", values[i])
+			} else if value.Valid {
+				u.Gender = value.String
+			}
+		case user.FieldRole:
+			if value, ok := values[i].(*sql.NullInt64); !ok {
+				return fmt.Errorf("unexpected type %T for field role", values[i])
+			} else if value.Valid {
+				u.Role = int(value.Int64)
 			}
 		default:
 			u.selectValues.Set(columns[i], values[i])
@@ -226,26 +162,6 @@ func (u *User) assignValues(columns []string, values []any) error {
 // This includes values selected through modifiers, order, etc.
 func (u *User) Value(name string) (ent.Value, error) {
 	return u.selectValues.Get(name)
-}
-
-// QuerySpouse queries the "spouse" edge of the User entity.
-func (u *User) QuerySpouse() *UserQuery {
-	return NewUserClient(u.config).QuerySpouse(u)
-}
-
-// QueryPrev queries the "prev" edge of the User entity.
-func (u *User) QueryPrev() *UserQuery {
-	return NewUserClient(u.config).QueryPrev(u)
-}
-
-// QueryNext queries the "next" edge of the User entity.
-func (u *User) QueryNext() *UserQuery {
-	return NewUserClient(u.config).QueryNext(u)
-}
-
-// QueryPets queries the "pets" edge of the User entity.
-func (u *User) QueryPets() *PetQuery {
-	return NewUserClient(u.config).QueryPets(u)
 }
 
 // Update returns a builder for updating this User.
@@ -283,20 +199,29 @@ func (u *User) String() string {
 	builder.WriteString("updated_by=")
 	builder.WriteString(u.UpdatedBy)
 	builder.WriteString(", ")
-	builder.WriteString("is_deleted=")
-	builder.WriteString(fmt.Sprintf("%v", u.IsDeleted))
-	builder.WriteString(", ")
 	builder.WriteString("deleted_at=")
 	builder.WriteString(u.DeletedAt.Format(time.ANSIC))
 	builder.WriteString(", ")
 	builder.WriteString("deleted_by=")
 	builder.WriteString(u.DeletedBy)
 	builder.WriteString(", ")
-	builder.WriteString("age=")
-	builder.WriteString(fmt.Sprintf("%v", u.Age))
+	builder.WriteString("mobile=")
+	builder.WriteString(u.Mobile)
 	builder.WriteString(", ")
-	builder.WriteString("name=")
-	builder.WriteString(u.Name)
+	builder.WriteString("password=")
+	builder.WriteString(u.Password)
+	builder.WriteString(", ")
+	builder.WriteString("nickname=")
+	builder.WriteString(u.Nickname)
+	builder.WriteString(", ")
+	builder.WriteString("birthday=")
+	builder.WriteString(u.Birthday.Format(time.ANSIC))
+	builder.WriteString(", ")
+	builder.WriteString("gender=")
+	builder.WriteString(u.Gender)
+	builder.WriteString(", ")
+	builder.WriteString("role=")
+	builder.WriteString(fmt.Sprintf("%v", u.Role))
 	builder.WriteByte(')')
 	return builder.String()
 }
