@@ -3,7 +3,7 @@
 package user
 
 import (
-	"ent-three-layer/app/user/srv/internal/data/v1/do/ent/predicate"
+	"ent-three-layer/app/user/srv/internal/data/v1/ent/predicate"
 	"time"
 
 	"entgo.io/ent/dialect/sql"

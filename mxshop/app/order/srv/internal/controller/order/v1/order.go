@@ -11,7 +11,7 @@ import (
 )
 
 type orderServer struct {
-	pb.UnimplementedOrderServer
+	pb.UnimplementedOrderServer // orderServer
 
 	srv service.ServiceFactory
 }

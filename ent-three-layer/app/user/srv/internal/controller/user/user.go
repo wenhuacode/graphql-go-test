@@ -1,4 +1,4 @@
-package v1
+package user
 
 import (
 	"context"
@@ -36,7 +36,7 @@ func DTOToResponse(userDTO dto.UserDTO) *proto.UserInfoResponse {
 	return &userInfoRsp
 }
 
-func (us *userServer) GetUserList(ctx context.Context, info *proto.PageInfo) (*proto.UserListResponse, error) {
+func (us *userServer) GetUserList(ctx context.Context, info *proto.ListRequest) (*proto.UserListResponse, error) {
 	log.Info("GetUserList is called")
 	srvOpts := v13.ListMeta{
 		Page:     int(info.Pn),

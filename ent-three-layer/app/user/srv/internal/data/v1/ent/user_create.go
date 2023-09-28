@@ -4,7 +4,7 @@ package ent
 
 import (
 	"context"
-	"ent-three-layer/app/user/srv/internal/data/v1/do/ent/user"
+	"ent-three-layer/app/user/srv/internal/data/v1/ent/user"
 	"errors"
 	"fmt"
 	"time"

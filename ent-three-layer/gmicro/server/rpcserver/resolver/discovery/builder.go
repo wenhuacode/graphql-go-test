@@ -6,8 +6,8 @@ import (
 	"strings"
 	"time"
 
+	"ent-three-layer/gmicro/registry"
 	"google.golang.org/grpc/resolver"
-	"mxshop/gmicro/registry"
 )
 
 const name = "discovery"

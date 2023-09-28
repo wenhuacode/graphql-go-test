@@ -4,8 +4,8 @@ package ent
 
 import (
 	"context"
-	"ent-three-layer/app/user/srv/internal/data/v1/do/ent/predicate"
-	"ent-three-layer/app/user/srv/internal/data/v1/do/ent/user"
+	"ent-three-layer/app/user/srv/internal/data/v1/ent/predicate"
+	"ent-three-layer/app/user/srv/internal/data/v1/ent/user"
 
 	"entgo.io/ent/dialect/sql"
 	"entgo.io/ent/dialect/sql/sqlgraph"

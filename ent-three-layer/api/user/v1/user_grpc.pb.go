@@ -23,7 +23,7 @@ const _ = grpc.SupportPackageIsVersion7
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type UserClient interface {
-	GetUserList(ctx context.Context, in *PageInfo, opts ...grpc.CallOption) (*UserListResponse, error)
+	GetUserList(ctx context.Context, in *ListRequest, opts ...grpc.CallOption) (*UserListResponse, error)
 	GetUserByMobile(ctx context.Context, in *MobileRequest, opts ...grpc.CallOption) (*UserInfoResponse, error)
 	GetUserById(ctx context.Context, in *IdRequest, opts ...grpc.CallOption) (*UserInfoResponse, error)
 	CreateUser(ctx context.Context, in *CreateUserInfo, opts ...grpc.CallOption) (*UserInfoResponse, error)
@@ -39,7 +39,7 @@ func NewUserClient(cc grpc.ClientConnInterface) UserClient {
 	return &userClient{cc}
 }
 
-func (c *userClient) GetUserList(ctx context.Context, in *PageInfo, opts ...grpc.CallOption) (*UserListResponse, error) {
+func (c *userClient) GetUserList(ctx context.Context, in *ListRequest, opts ...grpc.CallOption) (*UserListResponse, error) {
 	out := new(UserListResponse)
 	err := c.cc.Invoke(ctx, "/User/GetUserList", in, out, opts...)
 	if err != nil {
@@ -94,22 +94,23 @@ func (c *userClient) CheckPassWord(ctx context.Context, in *PasswordCheckInfo, o
 }
 
 // UserServer is the server API for User service.
-// All implementations should embed UnimplementedUserServer
+// All implementations must embed UnimplementedUserServer
 // for forward compatibility
 type UserServer interface {
-	GetUserList(context.Context, *PageInfo) (*UserListResponse, error)
+	GetUserList(context.Context, *ListRequest) (*UserListResponse, error)
 	GetUserByMobile(context.Context, *MobileRequest) (*UserInfoResponse, error)
 	GetUserById(context.Context, *IdRequest) (*UserInfoResponse, error)
 	CreateUser(context.Context, *CreateUserInfo) (*UserInfoResponse, error)
 	UpdateUser(context.Context, *UpdateUserInfo) (*emptypb.Empty, error)
 	CheckPassWord(context.Context, *PasswordCheckInfo) (*CheckResponse, error)
+	mustEmbedUnimplementedUserServer()
 }
 
-// UnimplementedUserServer should be embedded to have forward compatible implementations.
+// UnimplementedUserServer must be embedded to have forward compatible implementations.
 type UnimplementedUserServer struct {
 }
 
-func (UnimplementedUserServer) GetUserList(context.Context, *PageInfo) (*UserListResponse, error) {
+func (UnimplementedUserServer) GetUserList(context.Context, *ListRequest) (*UserListResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetUserList not implemented")
 }
 func (UnimplementedUserServer) GetUserByMobile(context.Context, *MobileRequest) (*UserInfoResponse, error) {
@@ -127,6 +128,7 @@ func (UnimplementedUserServer) UpdateUser(context.Context, *UpdateUserInfo) (*em
 func (UnimplementedUserServer) CheckPassWord(context.Context, *PasswordCheckInfo) (*CheckResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CheckPassWord not implemented")
 }
+func (UnimplementedUserServer) mustEmbedUnimplementedUserServer() {}
 
 // UnsafeUserServer may be embedded to opt out of forward compatibility for this service.
 // Use of this interface is not recommended, as added methods to UserServer will
@@ -140,7 +142,7 @@ func RegisterUserServer(s grpc.ServiceRegistrar, srv UserServer) {
 }
 
 func _User_GetUserList_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(PageInfo)
+	in := new(ListRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -152,7 +154,7 @@ func _User_GetUserList_Handler(srv interface{}, ctx context.Context, dec func(in
 		FullMethod: "/User/GetUserList",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(UserServer).GetUserList(ctx, req.(*PageInfo))
+		return srv.(UserServer).GetUserList(ctx, req.(*ListRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }

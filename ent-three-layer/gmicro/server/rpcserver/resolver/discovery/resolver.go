@@ -8,10 +8,10 @@ import (
 	"strconv"
 	"time"
 
+	"ent-three-layer/gmicro/registry"
+	"ent-three-layer/pkg/log"
 	"google.golang.org/grpc/attributes"
 	"google.golang.org/grpc/resolver"
-	"mxshop/gmicro/registry"
-	"mxshop/pkg/log"
 )
 
 type discoveryResolver struct {
