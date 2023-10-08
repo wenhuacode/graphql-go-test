@@ -1,0 +1,259 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="ALL" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="f8257826-20ab-47e3-89dd-f2ac235df061" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/../casbin-test/.idea/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../casbin-test/.idea/casbin-test.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../casbin-test/.idea/modules.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../casbin-test/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../casbin-test/api/casbinapi.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../casbin-test/common/CasbinMiddleware.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../casbin-test/common/global.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../casbin-test/config/model.conf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../casbin-test/go.mod" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../casbin-test/go.sum" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../casbin-test/main.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../casbin-test/router/handler/func.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../casbin-test/router/router.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/mxshop-api.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/go.mod" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/go.sum" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/goods-web/api/banners/banner.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/goods-web/api/base.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/goods-web/api/brands/brand.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/goods-web/api/category/category.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/goods-web/api/goods/goods.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/goods-web/config-debug.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/goods-web/config-pro.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/goods-web/config/config.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/goods-web/forms/banner.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/goods-web/forms/brand.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/goods-web/forms/category.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/goods-web/forms/goods.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/goods-web/global/global.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/goods-web/initialize/config.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/goods-web/initialize/logger.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/goods-web/initialize/router.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/goods-web/initialize/sentinel.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/goods-web/initialize/srv_conn.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/goods-web/initialize/validator.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/goods-web/main.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/goods-web/middlewares/admin.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/goods-web/middlewares/cors.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/goods-web/middlewares/jwt.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/goods-web/middlewares/tracing.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/goods-web/models/request.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/goods-web/proto/goods.pb.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/goods-web/proto/goods.proto" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/goods-web/router/banner.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/goods-web/router/brand.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/goods-web/router/category.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/goods-web/router/goods.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/goods-web/utils/addr.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/goods-web/utils/otgrpc/README.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/goods-web/utils/otgrpc/client.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/goods-web/utils/otgrpc/errors.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/goods-web/utils/otgrpc/errors_test.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/goods-web/utils/otgrpc/options.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/goods-web/utils/otgrpc/package.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/goods-web/utils/otgrpc/server.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/goods-web/utils/otgrpc/shared.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/goods-web/utils/otgrpc/test/interceptor_test.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/goods-web/utils/otgrpc/test/otgrpc_testing/test.pb.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/goods-web/utils/otgrpc/test/otgrpc_testing/test.proto" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/goods-web/utils/register/consul/register.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/order-web/api/base.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/order-web/api/order/order.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/order-web/api/pay/alipay.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/order-web/api/shop_cart/shop_cart.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/order-web/config-debug.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/order-web/config-pro.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/order-web/config/config.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/order-web/forms/order.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/order-web/forms/shop_cart.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/order-web/global/global.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/order-web/initialize/config.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/order-web/initialize/logger.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/order-web/initialize/router.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/order-web/initialize/srv_conn.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/order-web/initialize/validator.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/order-web/main.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/order-web/middlewares/admin.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/order-web/middlewares/cors.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/order-web/middlewares/jwt.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/order-web/middlewares/tracing.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/order-web/models/request.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/order-web/proto/goods.pb.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/order-web/proto/goods.proto" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/order-web/proto/inventory.pb.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/order-web/proto/inventory.proto" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/order-web/proto/order.pb.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/order-web/proto/order.proto" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/order-web/router/order.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/order-web/router/shop_cart.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/order-web/utils/addr.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/order-web/utils/otgrpc/README.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/order-web/utils/otgrpc/client.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/order-web/utils/otgrpc/errors.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/order-web/utils/otgrpc/errors_test.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/order-web/utils/otgrpc/options.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/order-web/utils/otgrpc/package.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/order-web/utils/otgrpc/server.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/order-web/utils/otgrpc/shared.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/order-web/utils/otgrpc/test/interceptor_test.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/order-web/utils/otgrpc/test/otgrpc_testing/test.pb.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/order-web/utils/otgrpc/test/otgrpc_testing/test.proto" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/order-web/utils/register/consul/register.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/order-web/validator/validators.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/oss-web/.idea/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/oss-web/.idea/modules.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/oss-web/.idea/oss-web.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/oss-web/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/oss-web/config-debug.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/oss-web/config-pro.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/oss-web/config/config.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/oss-web/global/global.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/oss-web/handler/oss.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/oss-web/initialize/config.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/oss-web/initialize/logger.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/oss-web/initialize/router.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/oss-web/initialize/validator.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/oss-web/main.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/oss-web/middlewares/admin.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/oss-web/middlewares/cors.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/oss-web/middlewares/jwt.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/oss-web/models/request.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/oss-web/router/oss.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/oss-web/static/css/style.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/oss-web/static/js/upload.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/oss-web/static/lib/plupload-2.1.2/js/Moxie.swf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/oss-web/static/lib/plupload-2.1.2/js/Moxie.xap" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/oss-web/static/lib/plupload-2.1.2/js/moxie.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/oss-web/static/lib/plupload-2.1.2/js/moxie.min.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/oss-web/static/lib/plupload-2.1.2/js/plupload.dev.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/oss-web/static/lib/plupload-2.1.2/js/plupload.full.min.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/oss-web/static/lib/plupload-2.1.2/js/plupload.min.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/oss-web/static/lib/plupload-2.1.2/license.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/oss-web/static/lib/plupload-2.1.2/readme.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/oss-web/templates/index.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/oss-web/utils/addr.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/oss-web/utils/oss.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/oss-web/utils/register/consul/register.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tmp/nacos/cache/config/goods-web.json@@dev@@89cdf9b9-aac2-40df-920c-113fc42d85d4" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tmp/nacos/cache/config/order-web.json@@dev@@dfcf46b3-0203-4d00-97df-da16266b6adb" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tmp/nacos/cache/config/oss-web.json@@dev@@89cdf9b9-aac2-40df-920c-113fc42d85d4" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tmp/nacos/cache/config/user-web.json@@dev@@c1872978-d51c-4188-a497-4e0cd20b97d5" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tmp/nacos/cache/config/userop-web.json@@dev@@95c8fe3c-f5e1-4115-b583-9b6fee0b55bc" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user-web/api/chaptcha.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user-web/api/sms.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user-web/api/user.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user-web/config-debug.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user-web/config-pro.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user-web/config/config.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user-web/forms/sms.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user-web/forms/user.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user-web/global/global.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user-web/global/reponse/user.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user-web/index.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user-web/initialize/config.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user-web/initialize/logger.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user-web/initialize/router.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user-web/initialize/srv_conn.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user-web/initialize/validator.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user-web/main.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user-web/middlewares/admin.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user-web/middlewares/cors.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user-web/middlewares/jwt.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user-web/models/request.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user-web/proto/main/main.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user-web/proto/user.pb.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user-web/proto/user.proto" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user-web/router/base.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user-web/router/user.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user-web/utils/addr.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user-web/utils/register/consul/register.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user-web/validator/validators.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/userop-web/api/address/address.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/userop-web/api/base.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/userop-web/api/message/message.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/userop-web/api/user_fav/user_fav.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/userop-web/config-debug.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/userop-web/config-pro.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/userop-web/config/config.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/userop-web/forms/address.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/userop-web/forms/message.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/userop-web/forms/user_fav.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/userop-web/global/global.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/userop-web/initialize/config.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/userop-web/initialize/logger.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/userop-web/initialize/router.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/userop-web/initialize/srv_conn.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/userop-web/initialize/validator.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/userop-web/main.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/userop-web/middlewares/admin.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/userop-web/middlewares/cors.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/userop-web/middlewares/jwt.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/userop-web/models/request.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/userop-web/proto/address.pb.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/userop-web/proto/address.proto" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/userop-web/proto/goods.pb.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/userop-web/proto/goods.proto" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/userop-web/proto/message.pb.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/userop-web/proto/message.proto" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/userop-web/proto/userfav.pb.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/userop-web/proto/userfav.proto" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/userop-web/router/address.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/userop-web/router/message.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/userop-web/router/user_fav.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/userop-web/utils/addr.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/userop-web/utils/register/consul/register.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/userop-web/validator/validators.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ent-three-layer/api/user/v1/go.mod" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ent-three-layer/api/user/v1/go.sum" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ent-three-layer/go.mod" beforeDir="false" afterPath="$PROJECT_DIR$/../ent-three-layer/go.mod" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ent-three-layer/go.sum" beforeDir="false" afterPath="$PROJECT_DIR$/../ent-three-layer/go.sum" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../go-graphql-test/go.mod" beforeDir="false" afterPath="$PROJECT_DIR$/../go-graphql-test/go.mod" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../go-graphql-test/go.sum" beforeDir="false" afterPath="$PROJECT_DIR$/../go-graphql-test/go.sum" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="GOROOT" url="file://C:/Program Files/Go" />
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="ProjectId" id="2WTXlxYpI5XTIhIq7kJaWmRhGEl" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.go.formatter.settings.were.checked": "true",
+    "RunOnceActivity.go.migrated.go.modules.settings": "true",
+    "RunOnceActivity.go.modules.go.list.on.any.changes.was.set": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "go.import.settings.migrated": "true",
+    "go.sdk.automatically.set": "true",
+    "last_opened_file_path": "D:/go-projects/mxshop-api",
+    "node.js.detected.package.eslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)"
+  }
+}]]></component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="VgoProject">
+    <settings-migrated>true</settings-migrated>
+  </component>
+</project>
